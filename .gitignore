@@ -1,0 +1,9 @@
+venv/
+.idea/
+.env
+.git
+__pycache__/
+*.py[cod]
+*.xcf
+mongo-data
+.webassets-cache

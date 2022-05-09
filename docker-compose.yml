@@ -1,0 +1,55 @@
+version: '3.4'
+
+services:
+  website:
+    restart: unless-stopped
+    build: ./website
+    ports:
+      - "5000:5000"
+    environment:
+      FLASK_DEBUG: 1
+      FLASK_ENV: development
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/0
+    volumes:
+      - ./website:/app
+    entrypoint: gunicorn
+    command: --bind 0.0.0.0:5000 --access-logfile - wsgi:app --reload
+    env_file:
+      - './website/.env'
+
+  worker:
+    build: ./website
+    command: watchmedo auto-restart --directory=./app --pattern=*.py --recursive -- celery --app run_celery.celery worker --loglevel=debug
+    volumes:
+      - ./website:/app
+    environment:
+      - FLASK_DEBUG=1
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - website
+      - redis
+
+  redis:
+    image: redis:6.2-alpine
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+    # command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmx8oja23iojWEO23iooij
+    command: redis-server --save 20 1 --loglevel warning
+    volumes:
+      - cache:/data
+
+  mongo:
+    image: 'mongo'
+    ports:
+      - '27018:27017'
+    volumes:
+      - ./mongo-data:/data/db
+
+volumes:
+  cache:
+    driver: local
+
+  mongo-data:

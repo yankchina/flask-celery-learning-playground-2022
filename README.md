@@ -1,0 +1,1 @@
+See the website directory for the celery implementation as well as the docker-compose file for how to start up the worker.
