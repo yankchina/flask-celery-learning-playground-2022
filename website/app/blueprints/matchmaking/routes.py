@@ -44,8 +44,6 @@ def taskstatus(task_id):
     print(dir(task))
     return jsonify({'success': True, 'message': 'checked task'})
 
-
-
 @bp.route('/leave_matchmaking', methods=["POST"])
 @login_required
 def leave_matchmaking():

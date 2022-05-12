@@ -20,5 +20,3 @@ def index():
 @bp.route('/join_game')
 def join_game():
     pass
-    # find_match()
-    # return jsonify({'server': get_game_server(), 'game_id': 1, 'html': render_template('game.html')}) # obfuscate later

@@ -1,0 +1,32 @@
+<div>
+    hey
+</div>
+
+<script>
+    // document.addEventListener("DOMContentLoaded", function () {
+    // try {
+    // socket = io.connect('https://beta.doodler.fun', {reconnection: false});
+    // socket = io.connect('http://localhost:5000');
+    socket = io.connect({{ game_server }}, { reconnection: false });
+    console.log(socket);
+    console.log('success');
+    // } catch {
+    // socket = io.connect('http://192.168.1.99:5000');
+    // }
+
+    // let socket = io.connect(url, {reconnection: false});
+    socket.on('connect_error', err => { console.log(err); console.log('conn_error') });
+    socket.on('connect_failed', err => { console.log(err); console.log('conn_failed') });
+    socket.on('disconnect', err => { console.log(err); console.log('disconnect') });
+    // });
+
+    socket.on('connect', () => {
+
+        socket.emit('join_game',
+            {
+                roomType: 'game',
+            }
+        )
+
+    });
+</script>

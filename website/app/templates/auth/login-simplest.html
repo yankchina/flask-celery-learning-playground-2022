@@ -1,0 +1,13 @@
+{% extends 'partials/base.html' %}
+
+{% block body %}
+
+<form action="/user" method="POST">
+    {{ form.csrf_token }}
+    {% if form.csrf_token.errors %}
+        <div class="warning">You have submitted an invalid CSRF token</div>
+    {% endif %}
+<div>{{ form.name }} {{ form.name.label }}</div>
+<div>{{ form.age }}{{ form.age.label }}</div>
+
+{% endblock %}

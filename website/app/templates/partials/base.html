@@ -1,0 +1,42 @@
+{% from "components/queue_timer.html" import queue_timer with context %}
+{% from "components/notification_div.html" import notification_div with context %}
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="Index.css" />
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.5.5/rxjs.umd.js" integrity="sha512-aK/ye33+7EwET3S9lsTCva4L8J3Dms0Zr5gBmZoK583n4kSxcWM4fnnXwR41kN+gPO7U5/qLdQrabiOnKrYb6g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+
+
+<body>
+
+    {% block content %}
+
+    {% endblock %}
+
+    {{ queue_timer() }}
+    {{ notification_div() }}
+</body>
+
+
+{% block scripts %}
+
+{% endblock %}
+
+
+{% assets "app-js" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{% endassets %}
+
+<script src="https://cdn.socket.io/4.4.1/socket.io.min.js"
+        integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H"
+        crossorigin="anonymous"></script>
