@@ -11,16 +11,17 @@ services:
       FLASK_ENV: development
       CELERY_BROKER_URL: redis://redis:6379/0
       CELERY_RESULT_BACKEND: redis://redis:6379/0
+      GAME_SERVER_AUTHENTICATION_KEY: 'my-secret-auth-key'
     volumes:
       - ./website:/app
     entrypoint: gunicorn
-    command: --bind 0.0.0.0:5000 --access-logfile - wsgi:app --reload
+    command: --bind 0.0.0.0:5000 -k geventwebsocket.gunicorn.workers.GeventWebSocketWorker -w 1 wsgi:app --reload
     env_file:
       - './website/.env'
 
   worker:
     build: ./website
-    command: watchmedo auto-restart --directory=./app --pattern=*.py --recursive -- celery --app run_celery.celery worker --loglevel=debug
+    command: watchmedo auto-restart --directory=./app --pattern=*.py --recursive -- celery --app run_celery.celery worker --pool=solo --loglevel=debug
     volumes:
       - ./website:/app
     environment:
@@ -30,6 +31,24 @@ services:
     depends_on:
       - website
       - redis
+
+  game-server-1:
+    restart: unless-stopped
+    build: ./game-server
+    ports:
+      - "5001:5001"
+    environment:
+      FLASK_DEBUG: 1
+      FLASK_ENV: development
+      SERVER_IP: 127.0.0.1
+      SERVER_PORT: 5001
+      GAME_SERVER_AUTHENTICATION_KEY: 'my-secret-auth-key'
+    volumes:
+      - ./game-server:/app
+    entrypoint: gunicorn
+    command: --bind 0.0.0.0:5001 -k geventwebsocket.gunicorn.workers.GeventWebSocketWorker -w 1 wsgi:app --reload
+    env_file:
+      - './game-server/.env'
 
   redis:
     image: redis:6.2-alpine

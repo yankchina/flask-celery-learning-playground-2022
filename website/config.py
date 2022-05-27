@@ -26,8 +26,19 @@ class Config(object):
     LANGUAGES = ['en', 'es']
     MS_TRANSLATOR_KEY = os.environ.get('MS_TRANSLATOR_KEY')
     ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')
-    REDIS_URL = os.environ.get('REDIS_URL') or 'redis://'
     POSTS_PER_PAGE = 25
     CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://localhost:6379')
     CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND', 'redis://localhost:6379')
     HASHING_ALGORITHM = os.environ.get('HASHING_ALGORITHM' , 'HS256')
+    REDIS_URL = os.environ.get('REDIS_URL') or 'redis://'
+    CACHE_REDIS_PASSWORD = os.environ.get('CACHE_REDIS_PASSWORD' , 'update_redis_password')
+
+    GAME_SERVER_AUTHENTICATION_KEY = os.environ.get('GAME_SERVER_AUTHENTICATION_KEY', 'update-game-server-auth-key')
+
+class ShellConfig(Config):
+    MONGODB_SETTINGS = {
+        "db": "doodler-website",
+        "host": "127.0.0.1",
+        'port': 27018
+        # "host": "mongodb://127.0.0.1:27017/doodler-website"
+    }

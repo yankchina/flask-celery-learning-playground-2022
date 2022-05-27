@@ -1,0 +1,81 @@
+{% extends 'partials/base.html' %}
+
+{% block content %}
+
+{% for id_, data in id_map.items() %}
+    <div>
+        {{ id_ }}
+    </div>
+    <ul>
+        {% for k, v in data.items() %}
+        <li>{{ k }}: {{ v }}</li>
+            {% if k == 'sid' %}
+            <button onclick="adminSendNotif('{{ v }}', 'hey')">Test SID</button>
+            {% endif %}
+        {% endfor %}
+        <button onclick="adminResetAllUserId('{{ id_ }}')">Reset Matchmaking</button>
+    </ul>
+{% endfor %}
+
+<label for="message">Message</label>
+<input id="message" type="text">
+<label for="sid">SID</label>
+<input id="sid" type="text">
+<label for="id">ID</label>
+<input id="id" type="text">
+
+<button onclick="adminSendNotif()">Send Message</button>
+<button onclick="clearIDMapCache()">clearIDMapCache</button>
+<button onclick="adminResetAllUserId()">Reset All For User</button>
+<button onclick="queryGamesRunning()">Query Games Running</button>
+<button style="padding: 1em 1em 1em 1em;" onclick="checkRedisQueue()">Check Redis Player Queue</button>
+
+<script>
+
+    function adminSendNotif(sid, message) {
+        $.ajax({
+            url: `/admin/send_notification_to_sid`,
+            data: {
+                'message': message ? message : document.getElementById('message').value,
+                'sid': sid ? sid : document.getElementById('sid').value,
+            },
+            success: function(result) {
+                console.log(result);
+            },
+        });
+    }
+
+    function clearIDMapCache() {
+        $.ajax({
+            url: `/admin/clear_id_map_cache`,
+            success: function(result) { console.log("Cleared cache") }
+        });
+    }
+
+    function adminResetAllUserId(user_id) {
+        $.ajax({
+            url: `/admin/reset_all_matchmaking_user_id`,
+            data: {
+                'user_id': user_id ? user_id : document.getElementById('id').value,
+            },
+            success: function(result) {
+                console.log(result);
+            },
+        });
+    }
+
+    function queryGamesRunning(game_server='game-server-1') {
+        $.ajax({
+            url: `http://${game_server}:5001/query_games_running`,
+            success: function(result) {
+                console.log(result);
+            },
+        });
+    }
+</script>
+
+{% assets "matchmaking-js" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{% endassets %}
+
+{% endblock %}

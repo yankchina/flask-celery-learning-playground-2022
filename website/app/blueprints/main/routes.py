@@ -10,11 +10,6 @@ def get_game_server():
 
 @bp.route('/')
 def index():
-    print(current_user._get_current_object())
-    print(current_user)
-    # result = add_together.apply_async((2,3), countdown=2.0)
-    # print(result, flush=True)
-
     return render_template('index.html')
 
 @bp.route('/join_game')

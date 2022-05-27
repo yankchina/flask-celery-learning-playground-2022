@@ -7,7 +7,7 @@ function showNotification(resultObject) {
     }
     let div = document.getElementById('notification_div');
     div.style.display = 'block';
-    div.style.background = resultObject.type == "success" ? "green" : "red";
+    div.style.background = resultObject.success ? "green" : "red";
     div.innerText = resultObject.message;
     hideNotification = setTimeout(() => {
         div.style.display = 'none';

@@ -1,0 +1,38 @@
+
+{% macro match_found() %}
+
+
+<div id="match-found-notification" >
+    <div class="">
+        Match Found
+    </div>
+    <div style="display: flex; margin-top: 20px;">
+        <div id="accept-match-found-btn" class="match-found-btn" style="margin-right:10px;">Accept</div>
+        <div id="decline-match-found-btn" class="match-found-btn">Decline</div>
+    </div>
+</div>
+
+
+<style>
+    #match-found-notification {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+        background: rgb(125, 125, 199);
+        border-radius: 1rem;
+        color: white;
+        position:absolute;
+        left:50%;
+        top:50%;
+        transform: translate(-50%, -50%);
+    }
+    .match-found-btn {
+        cursor: pointer;
+        padding: 1rem;
+        border: 1px solid white;
+    }
+</style>
+
+{% endmacro %}

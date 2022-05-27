@@ -14,114 +14,24 @@
 
 <button style="padding: 1em 1em 1em 1em;" onclick="testResponse()">Test Response</button>
 
+<button style="padding: 1em 1em 1em 1em;" onclick="testGameServerResponse()">testGameServerResponse</button>
+
+<button style="padding: 1em 1em 1em 1em;" onclick="testCreateGame()">testCreateGame</button>
+
+<button style="padding: 1em 1em 1em 1em;" onclick="testRequestWebsiteToGameServer()">testRequestWebsiteToGameServer</button>
+
+<button style="padding: 1em 1em 1em 1em;" onclick="testPlaySound()">testPlaySound</button>
+
 {% endblock %}
 
 {% block scripts %}
 
+{% assets "matchmaking-js" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{% endassets %}
+
 <script>
 
-    let gameSocket;
-
-    function joinGame() {
-        console.log('joining');
-        $.ajax({
-            url: `/join_game`,
-            data: {
-            },
-            success: function (result) {
-                gameSocket = io.connect(result.server, { query: `game_id=${result.game_id}`, reconnection: false });
-                console.log('connected successfully');
-                console.log(result);
-                document.documentElement.innerHTML = result.html;
-            },
-            error: function (request, status, error) {
-                console.log(request.responseText);
-            },
-
-        });
-    }
-
-    function joinMatchmaking() {
-        console.log('joining');
-        $.ajax({
-            url: `/join_matchmaking`,
-            data: {
-            },
-            success: function (result) {
-                // gameSocket = io.connect(result.server, { query: `game_id=${result.game_id}`, reconnection: false });
-                // console.log('connected successfully');
-                // console.log(result);
-                console.log(result);
-                showNotification(result);
-                if (result.success) {
-                    startQueueTimer(1);
-                }
-                setInterval(() => {
-                    checkStatus(result.location);
-                }, 1000);
-
-                // document.documentElement.innerHTML = result.html;
-            },
-            error: function (request, status, error) {
-                console.log(request.responseText);
-            },
-
-        });
-    }
-
-    function checkStatus(url) {
-        fetch(
-            url,
-            {
-                mode: "no-cors",
-            }
-        )
-        .then(res => res.json())
-        .then(json => console.log(json))
-        .catch(error => console.warn(error));
-    }
-
-    function testCelery() {
-        $.ajax({
-            url: `/test_task`,
-            data: {
-            },
-            success: function (result) {
-                console.log(result);
-            },
-            error: function (request, status, error) {
-                console.log(request.responseText);
-            },
-        });
-    }
-
-    function testRedis() {
-        $.ajax({
-            url: `/test_redis`,
-            data: {
-            },
-            success: function (result) {
-                console.log(result);
-            },
-            error: function (request, status, error) {
-                console.log(request.responseText);
-            },
-        });
-    }
-
-    function testResponse() {
-        $.ajax({
-            url: `/test_response`,
-            data: {
-            },
-            success: function (result) {
-                console.log(result);
-            },
-            error: function (request, status, error) {
-                console.log(request.responseText);
-            },
-        });
-    }
 
 </script>
 <script src="{{ url_for('static', filename='js/game/gameCommands.js') }}"></script>

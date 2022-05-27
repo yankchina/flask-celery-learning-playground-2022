@@ -1,0 +1,64 @@
+2022-05-14 20:18:18 | ERROR    | Line 25   | /app/app/blueprints/matchmaking/routes_status.py | User None could not leave queue
+2022-05-14 20:18:18 | ERROR    | Line 25   | /app/app/blueprints/matchmaking/routes_status.py | User None could not leave queue
+2022-05-14 22:02:03 | ERROR    | Line 25   | /app/app/blueprints/matchmaking/routes_status.py | User None could not leave queue
+2022-05-14 22:02:03 | ERROR    | Line 25   | /app/app/blueprints/matchmaking/routes_status.py | User None could not leave queue
+2022-05-14 22:10:14 | ERROR    | Line 25   | /app/app/blueprints/matchmaking/routes_status.py | User None could not leave queue
+2022-05-14 22:10:14 | ERROR    | Line 25   | /app/app/blueprints/matchmaking/routes_status.py | User None could not leave queue
+2022-05-19 16:11:18 | ERROR    | Line 1456 | /home/steven/flask-celery-playground/website/venv/lib/python3.7/site-packages/flask/app.py | Exception on /game_created_successfully [GET]
+Traceback (most recent call last):
+  File "/home/steven/flask-celery-playground/website/venv/lib/python3.7/site-packages/flask/app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/steven/flask-celery-playground/website/venv/lib/python3.7/site-packages/flask/app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/steven/flask-celery-playground/website/venv/lib/python3.7/site-packages/flask/app.py", line 1521, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/home/steven/flask-celery-playground/website/venv/lib/python3.7/site-packages/flask/app.py", line 1861, in preprocess_request
+    rv = self.ensure_sync(before_func)()
+  File "/home/steven/flask-celery-playground/website/app/__init__.py", line 96, in auto_login_user
+    user.save()
+  File "/home/steven/flask-celery-playground/website/venv/lib/python3.7/site-packages/mongoengine/document.py", line 411, in save
+    self.ensure_indexes()
+  File "/home/steven/flask-celery-playground/website/venv/lib/python3.7/site-packages/mongoengine/document.py", line 890, in ensure_indexes
+    collection = cls._get_collection()
+  File "/home/steven/flask-celery-playground/website/venv/lib/python3.7/site-packages/mongoengine/document.py", line 232, in _get_collection
+    if cls._meta.get("auto_create_index", True) and db.client.is_primary:
+  File "/home/steven/flask-celery-playground/website/venv/lib/python3.7/site-packages/pymongo/mongo_client.py", line 1055, in is_primary
+    return self._server_property("is_writable")
+  File "/home/steven/flask-celery-playground/website/venv/lib/python3.7/site-packages/pymongo/mongo_client.py", line 836, in _server_property
+    server = self._topology.select_server(writable_server_selector)
+  File "/home/steven/flask-celery-playground/website/venv/lib/python3.7/site-packages/pymongo/topology.py", line 251, in select_server
+    servers = self.select_servers(selector, server_selection_timeout, address)
+  File "/home/steven/flask-celery-playground/website/venv/lib/python3.7/site-packages/pymongo/topology.py", line 212, in select_servers
+    server_descriptions = self._select_servers_loop(selector, server_timeout, address)
+  File "/home/steven/flask-celery-playground/website/venv/lib/python3.7/site-packages/pymongo/topology.py", line 229, in _select_servers_loop
+    % (self._error_message(selector), timeout, self.description)
+pymongo.errors.ServerSelectionTimeoutError: mongo:27017: [Errno -2] Name or service not known, Timeout: 30s, Topology Description: <TopologyDescription id: 6286a448baac16490da1eda8, topology_type: Unknown, servers: [<ServerDescription ('mongo', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('mongo:27017: [Errno -2] Name or service not known')>]>
+2022-05-19 16:11:18 | ERROR    | Line 1456 | /home/steven/flask-celery-playground/website/venv/lib/python3.7/site-packages/flask/app.py | Exception on /game_created_successfully [GET]
+Traceback (most recent call last):
+  File "/home/steven/flask-celery-playground/website/venv/lib/python3.7/site-packages/flask/app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/steven/flask-celery-playground/website/venv/lib/python3.7/site-packages/flask/app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/steven/flask-celery-playground/website/venv/lib/python3.7/site-packages/flask/app.py", line 1521, in full_dispatch_request
+    rv = self.preprocess_request()
+  File "/home/steven/flask-celery-playground/website/venv/lib/python3.7/site-packages/flask/app.py", line 1861, in preprocess_request
+    rv = self.ensure_sync(before_func)()
+  File "/home/steven/flask-celery-playground/website/app/__init__.py", line 96, in auto_login_user
+    user.save()
+  File "/home/steven/flask-celery-playground/website/venv/lib/python3.7/site-packages/mongoengine/document.py", line 411, in save
+    self.ensure_indexes()
+  File "/home/steven/flask-celery-playground/website/venv/lib/python3.7/site-packages/mongoengine/document.py", line 890, in ensure_indexes
+    collection = cls._get_collection()
+  File "/home/steven/flask-celery-playground/website/venv/lib/python3.7/site-packages/mongoengine/document.py", line 232, in _get_collection
+    if cls._meta.get("auto_create_index", True) and db.client.is_primary:
+  File "/home/steven/flask-celery-playground/website/venv/lib/python3.7/site-packages/pymongo/mongo_client.py", line 1055, in is_primary
+    return self._server_property("is_writable")
+  File "/home/steven/flask-celery-playground/website/venv/lib/python3.7/site-packages/pymongo/mongo_client.py", line 836, in _server_property
+    server = self._topology.select_server(writable_server_selector)
+  File "/home/steven/flask-celery-playground/website/venv/lib/python3.7/site-packages/pymongo/topology.py", line 251, in select_server
+    servers = self.select_servers(selector, server_selection_timeout, address)
+  File "/home/steven/flask-celery-playground/website/venv/lib/python3.7/site-packages/pymongo/topology.py", line 212, in select_servers
+    server_descriptions = self._select_servers_loop(selector, server_timeout, address)
+  File "/home/steven/flask-celery-playground/website/venv/lib/python3.7/site-packages/pymongo/topology.py", line 229, in _select_servers_loop
+    % (self._error_message(selector), timeout, self.description)
+pymongo.errors.ServerSelectionTimeoutError: mongo:27017: [Errno -2] Name or service not known, Timeout: 30s, Topology Description: <TopologyDescription id: 6286a448baac16490da1eda8, topology_type: Unknown, servers: [<ServerDescription ('mongo', 27017) server_type: Unknown, rtt: None, error=AutoReconnect('mongo:27017: [Errno -2] Name or service not known')>]>

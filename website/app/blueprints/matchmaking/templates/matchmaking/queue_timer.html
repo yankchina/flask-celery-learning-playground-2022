@@ -1,0 +1,62 @@
+{% macro queue_timer(initial_time=0) %}
+
+<div id="queue-timer" style="display: none; position: fixed; left:50%; top:100vh; padding: 10px; background: lightgray; border: 1px solid gray; transform: translate(-50%, -100%);">
+    <div id="queue-timer-count">
+        {{ initial_time }}
+    </div>
+    <div id="cancel-queue-button">
+        x
+    </div>
+</div>
+
+
+{% if seconds_since_joined_queue %}
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    startQueueTimer({{seconds_since_joined_queue}});
+});
+</script>
+{% endif %}
+
+
+<script>
+    let cancelQueue$ = rxjs.fromEvent(document.getElementById('cancel-queue-button'), 'click')
+
+    cancelQueue$.subscribe(() => {
+        clearInterval(checkingTaskStatus);
+        checkingTaskStatus = undefined;
+
+        rxjs.ajax.ajax.post('/leave_matchmaking').pipe(
+            rxjs.map(resp => resp.response)
+        )
+            .subscribe((result) => {
+                showNotification(result);
+                endQueueTimer();
+        });
+    })
+
+    // let cancelQueueBtn = document.getElementById('cancel-queue-button');
+    // cancelQueueBtn.addEventListener('click', () => {
+    //     $.ajax({
+    //         url: `/leave_matchmaking`,
+    //         type: "POST",
+    //         success: function(result) {
+    //             showNotification(result);
+    //             endQueueTimer();
+    //         },
+    //     });
+    // });
+
+</script>
+<style>
+    #queue-timer {
+        display:flex;
+    }
+
+    #cancel-queue-button {
+        background: red;
+        padding: 1em;
+
+    }
+</style>
+{% endmacro %}

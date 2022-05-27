@@ -1,10 +1,10 @@
 from datetime import datetime
 import mongoengine as me
 from flask import current_app
-from flask_login import UserMixin
 
 # from .party import PartyMixin
 import app.models.party as p
+import app.blueprints.matchmaking.models as m
 
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
@@ -14,15 +14,14 @@ from time import time
 
 
 
-class User(UserMixin, me.Document, p.PartyMixin):
+
+class User(UserMixin, me.Document, p.PartyMixin, m.MatchmakingMixin):
     # meta = { 'collection': cfg.get('USERS_COLLECTION'), 'strict': False}
     meta = {'strict': False}
     username = me.StringField(min_length=3, max_length=16)
     username_lower = me.StringField(min_length=3, max_length=16, unique=True)
     email = me.EmailField(required=True, unique=True)
     email_verified = me.BooleanField(default=False)
-    mmr = me.IntField(default=1000)
-    datetime_joined_queue = me.DateTimeField()
     password_hash = me.StringField(required=True)
     party_id = me.StringField()
     games_left = me.ListField()
@@ -35,21 +34,11 @@ class User(UserMixin, me.Document, p.PartyMixin):
     member_since = me.DateTimeField(default=datetime.utcnow)
     last_seen = me.DateTimeField(default=datetime.utcnow)
 
+    mmr = me.IntField(default=1000)
+    datetime_joined_queue = me.DateTimeField()
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
-
-    def join_queue(self):
-        self.datetime_joined_queue = datetime.utcnow()
-
-    def get_seconds_since_joined_queue(self):
-        if self.datetime_joined_queue:
-            return (self.datetime_joined_queue - datetime.utcnow()).seconds
-
-    def leave_queue(self):
-        # user left queue for any reason
-        self.datetime_joined_queue = None
-
 
     def can_join_party(self):
         return False if self.party_id else True

@@ -1,0 +1,35 @@
+{% macro admin_notification() %}
+
+<div id="admin-notification">
+
+</div>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function() {
+    socket.on('admin_notification', showAdminNotification);
+    let adminNotifElemTimeout;
+    function showAdminNotification(data) {
+        clearTimeout(adminNotifElemTimeout);
+        let notifElem = document.getElementById('admin-notification');
+        notifElem.innerText = data.message;
+        notifElem.style.display = 'flex';
+        adminNotifElemTimeout = setTimeout(() => {
+            notifElem.style.display = 'none';
+        }, 5000);
+    }
+});
+
+</script>
+
+<style>
+    #admin-notification {
+        display: none;
+        padding: 1rem;
+        background: rgb(107, 109, 173);
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
+    }
+</style>
+{% endmacro %}

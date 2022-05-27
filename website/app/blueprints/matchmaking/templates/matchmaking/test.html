@@ -1,0 +1,22 @@
+{% extends 'partials/base.html' %}
+
+
+{% block content %}
+
+This is my test
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+
+    document.addEventListener("DOMContentLoaded", function() {
+        myTestFunction();
+    });
+
+</script>
+
+{% assets "matchmaking-js" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{% endassets %}
+{% endblock %}

@@ -1,0 +1,369 @@
+2022-05-18 19:06:37 | ERROR    | Line 1456 | /home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py | Exception on /create_game [GET]
+Traceback (most recent call last):
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1523, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1509, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+TypeError: create_game() missing 1 required positional argument: 'data'
+2022-05-18 19:06:37 | ERROR    | Line 1456 | /home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py | Exception on /create_game [GET]
+Traceback (most recent call last):
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1523, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1509, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+TypeError: create_game() missing 1 required positional argument: 'data'
+2022-05-18 19:06:37 | ERROR    | Line 1456 | /home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py | Exception on /create_game [GET]
+Traceback (most recent call last):
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1523, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1509, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+TypeError: create_game() missing 1 required positional argument: 'data'
+2022-05-18 19:06:37 | ERROR    | Line 1456 | /home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py | Exception on /create_game [GET]
+Traceback (most recent call last):
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1523, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1509, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+TypeError: create_game() missing 1 required positional argument: 'data'
+2022-05-18 19:06:37 | ERROR    | Line 1456 | /home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py | Exception on /create_game [GET]
+Traceback (most recent call last):
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1523, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1509, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+TypeError: create_game() missing 1 required positional argument: 'data'
+2022-05-18 19:06:37 | ERROR    | Line 1456 | /home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py | Exception on /create_game [GET]
+Traceback (most recent call last):
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1523, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1509, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+TypeError: create_game() missing 1 required positional argument: 'data'
+2022-05-18 19:07:22 | ERROR    | Line 1456 | /home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py | Exception on /create_game [GET]
+Traceback (most recent call last):
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1523, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1509, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+TypeError: create_game() missing 1 required positional argument: 'data'
+2022-05-18 19:07:22 | ERROR    | Line 1456 | /home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py | Exception on /create_game [GET]
+Traceback (most recent call last):
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1523, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1509, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+TypeError: create_game() missing 1 required positional argument: 'data'
+2022-05-18 19:07:22 | ERROR    | Line 1456 | /home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py | Exception on /create_game [GET]
+Traceback (most recent call last):
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1523, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1509, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+TypeError: create_game() missing 1 required positional argument: 'data'
+2022-05-18 19:07:22 | ERROR    | Line 1456 | /home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py | Exception on /create_game [GET]
+Traceback (most recent call last):
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1523, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1509, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+TypeError: create_game() missing 1 required positional argument: 'data'
+2022-05-18 19:07:22 | ERROR    | Line 1456 | /home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py | Exception on /create_game [GET]
+Traceback (most recent call last):
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1523, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1509, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+TypeError: create_game() missing 1 required positional argument: 'data'
+2022-05-18 19:07:22 | ERROR    | Line 1456 | /home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py | Exception on /create_game [GET]
+Traceback (most recent call last):
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1523, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1509, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+TypeError: create_game() missing 1 required positional argument: 'data'
+2022-05-18 19:25:22 | ERROR    | Line 1456 | /home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py | Exception on /create_game [GET]
+Traceback (most recent call last):
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1523, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1509, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/steven/flask-celery-playground/game-server/app/blueprints/game_two/routes/game_creation.py", line 16, in create_game
+    current_app.game_manager.create_game()
+  File "/home/steven/flask-celery-playground/game-server/app/blueprints/game_two/models/game_manager.py", line 13, in create_game
+    self.games[self.get_id()] = self.game_class(*game_args, **game_kwargs)
+TypeError: __init__() missing 1 required positional argument: 'players'
+2022-05-18 19:25:22 | ERROR    | Line 1456 | /home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py | Exception on /create_game [GET]
+Traceback (most recent call last):
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1523, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1509, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/steven/flask-celery-playground/game-server/app/blueprints/game_two/routes/game_creation.py", line 16, in create_game
+    current_app.game_manager.create_game()
+  File "/home/steven/flask-celery-playground/game-server/app/blueprints/game_two/models/game_manager.py", line 13, in create_game
+    self.games[self.get_id()] = self.game_class(*game_args, **game_kwargs)
+TypeError: __init__() missing 1 required positional argument: 'players'
+2022-05-18 19:25:22 | ERROR    | Line 1456 | /home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py | Exception on /create_game [GET]
+Traceback (most recent call last):
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1523, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1509, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/steven/flask-celery-playground/game-server/app/blueprints/game_two/routes/game_creation.py", line 16, in create_game
+    current_app.game_manager.create_game()
+  File "/home/steven/flask-celery-playground/game-server/app/blueprints/game_two/models/game_manager.py", line 13, in create_game
+    self.games[self.get_id()] = self.game_class(*game_args, **game_kwargs)
+TypeError: __init__() missing 1 required positional argument: 'players'
+2022-05-18 19:25:22 | ERROR    | Line 1456 | /home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py | Exception on /create_game [GET]
+Traceback (most recent call last):
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1523, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1509, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/steven/flask-celery-playground/game-server/app/blueprints/game_two/routes/game_creation.py", line 16, in create_game
+    current_app.game_manager.create_game()
+  File "/home/steven/flask-celery-playground/game-server/app/blueprints/game_two/models/game_manager.py", line 13, in create_game
+    self.games[self.get_id()] = self.game_class(*game_args, **game_kwargs)
+TypeError: __init__() missing 1 required positional argument: 'players'
+2022-05-18 19:25:22 | ERROR    | Line 1456 | /home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py | Exception on /create_game [GET]
+Traceback (most recent call last):
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1523, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1509, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/steven/flask-celery-playground/game-server/app/blueprints/game_two/routes/game_creation.py", line 16, in create_game
+    current_app.game_manager.create_game()
+  File "/home/steven/flask-celery-playground/game-server/app/blueprints/game_two/models/game_manager.py", line 13, in create_game
+    self.games[self.get_id()] = self.game_class(*game_args, **game_kwargs)
+TypeError: __init__() missing 1 required positional argument: 'players'
+2022-05-18 19:25:22 | ERROR    | Line 1456 | /home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py | Exception on /create_game [GET]
+Traceback (most recent call last):
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 2077, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1525, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask_cors/extension.py", line 165, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1523, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/steven/doodler-backend/game-server/venv/lib/python3.7/site-packages/flask/app.py", line 1509, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "/home/steven/flask-celery-playground/game-server/app/blueprints/game_two/routes/game_creation.py", line 16, in create_game
+    current_app.game_manager.create_game()
+  File "/home/steven/flask-celery-playground/game-server/app/blueprints/game_two/models/game_manager.py", line 13, in create_game
+    self.games[self.get_id()] = self.game_class(*game_args, **game_kwargs)
+TypeError: __init__() missing 1 required positional argument: 'players'
+2022-05-26 07:04:41 | ERROR    | Line 18   | /app/app/blueprints/game_two/routes/game_creation.py | No key was supplied. Returning...
+NoneType: None
+2022-05-26 07:06:52 | ERROR    | Line 19   | /app/app/blueprints/game_two/routes/game_creation.py | Error: 
+	Key supplied: my-secret-auth-key
+	Server key: None
+NoneType: None
+2022-05-26 08:38:34 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-26 08:49:18 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-26 08:53:18 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-26 08:54:22 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-26 08:54:53 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-26 09:10:19 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-26 09:11:42 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-26 09:13:01 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-26 09:20:07 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-26 09:22:44 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-26 09:40:35 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-26 09:40:49 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-26 09:43:01 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-26 09:43:18 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-26 09:43:28 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-26 10:16:10 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-26 10:16:44 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-26 10:16:57 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-26 10:17:09 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-26 10:21:42 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-26 10:21:51 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'

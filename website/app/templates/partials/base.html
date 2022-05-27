@@ -1,5 +1,7 @@
-{% from "components/queue_timer.html" import queue_timer with context %}
+{% from "matchmaking/queue_timer.html" import queue_timer with context %}
+{% from "matchmaking/match_found.html" import match_found with context %}
 {% from "components/notification_div.html" import notification_div with context %}
+{% from "admin/macros/admin_notification.html" import admin_notification with context %}
 <!DOCTYPE html>
 
 
@@ -23,9 +25,28 @@
 
     {% endblock %}
 
+    {{ match_found() }}
     {{ queue_timer() }}
     {{ notification_div() }}
+    {{ admin_notification() }}
 </body>
+
+<div id="toast-container" class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 11">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="toast align-items-center text-white bg-{{ category }} border-0 box-shadow-4" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay=10000>
+              <div class="d-flex">
+                  <div class="toast-body">
+                      {{ message|safe }}
+                  </div>
+                  <button type="button" class="btn-close btn-close-white me-4 mt-3" data-bs-dismiss="toast" aria-label="Close"></button>
+              </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+</div>
 
 
 {% block scripts %}
@@ -40,3 +61,14 @@
 <script src="https://cdn.socket.io/4.4.1/socket.io.min.js"
         integrity="sha384-fKnu0iswBIqkjxrhQCTZ7qlLHOFEgNkRmK2vaO/LbTZSXdJfAu6ewRBdwHPhBo/H"
         crossorigin="anonymous"></script>
+
+<script>
+    let gameSocket;
+    socket = io();
+    socket.on('connect', function() {
+    });
+    socket.on('join_game', function(data) {
+        gameSocket = io.connect(data.server, { query: `game_id=${data.game_id}`, reconnection: false });
+        document.documentElement.innerHTML = data.html;
+    });
+</script>
