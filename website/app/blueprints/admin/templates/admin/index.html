@@ -2,33 +2,80 @@
 
 {% block content %}
 
-{% for id_, data in id_map.items() %}
-    <div>
-        {{ id_ }}
-    </div>
-    <ul>
-        {% for k, v in data.items() %}
-        <li>{{ k }}: {{ v }}</li>
-            {% if k == 'sid' %}
-            <button onclick="adminSendNotif('{{ v }}', 'hey')">Test SID</button>
-            {% endif %}
-        {% endfor %}
-        <button onclick="adminResetAllUserId('{{ id_ }}')">Reset Matchmaking</button>
-    </ul>
-{% endfor %}
-
+<div style="display:flex">
 <label for="message">Message</label>
 <input id="message" type="text">
 <label for="sid">SID</label>
 <input id="sid" type="text">
 <label for="id">ID</label>
 <input id="id" type="text">
+<label for="id">Rate (ms)</label>
+<input id="rate" type="text" value="250">
+</div>
 
-<button onclick="adminSendNotif()">Send Message</button>
-<button onclick="clearIDMapCache()">clearIDMapCache</button>
-<button onclick="adminResetAllUserId()">Reset All For User</button>
-<button onclick="queryGamesRunning()">Query Games Running</button>
-<button style="padding: 1em 1em 1em 1em;" onclick="checkRedisQueue()">Check Redis Player Queue</button>
+<button style="padding: 0.5em 0.5em 0.5em 0.5em;" onclick="adminSendNotif()">Send Message</button>
+<button style="padding: 0.5em 0.5em 0.5em 0.5em;" onclick="queryIDMapCache()">queryIDMapCache</button>
+<button style="padding: 0.5em 0.5em 0.5em 0.5em;" onclick="clearIDMapCache()">clearIDMapCache</button>
+<button style="padding: 0.5em 0.5em 0.5em 0.5em;" onclick="adminResetAllUserId()">Reset All For User</button>
+<button style="padding: 0.5em 0.5em 0.5em 0.5em;" onclick="queryGamesRunning()">Query Games Running</button>
+<button style="padding: 0.5em 0.5em 0.5em 0.5em;" onclick="checkRedisQueue()">Check Redis Player Queue</button>
+<button style="padding: 0.5em 0.5em 0.5em 0.5em;" onclick="queryGameServers()">Query Game Servers</button>
+
+<div style="display: flex; justify-content:space-evenly; margin-top: 20px;">
+
+    <div>
+        <div>
+            <h2>SID Map</h2>
+            <!-- <button style="padding: 0.5em 0.5em 0.5em 0.5em;" onclick="monitorSID()">Turn On SID Monitor</button>
+            <button style="padding: 0.5em 0.5em 0.5em 0.5em;" onclick="clearInterval(monitorSIDInterval);document.getElementById('sid-ack').style.display='none';">Turn Off SID Monitor</button>
+            <h5 id="sid-ack" style="display:none;">Monitoring...</h5> -->
+
+        </div>
+    {% for id_, data in id_map.items() %}
+        <div id="sid-monitor">
+            <div>
+                {{ id_ }}
+            </div>
+            <ul>
+                {% for k, v in data.items() %}
+                <li>{{ k }}: {{ v }}</li>
+                    {% if k == 'sid' %}
+                    <button onclick="adminSendNotif('{{ v }}', 'hey')">Test SID</button>
+                    {% endif %}
+                {% endfor %}
+                <button onclick="adminResetAllUserId('{{ id_ }}')">Reset Matchmaking</button>
+            </ul>
+        </div>
+    {% endfor %}
+    </div>
+    <div>
+        <div>
+            <h2>Player Queue Monitor</h2>
+            <div style="display:flex; flex-direction: column;">
+                <button style="padding: 0.5em 0.5em 0.5em 0.5em;" onclick="monitorPlayerQueue()">Turn On Player Queue Monitor</button>
+                <button style="padding: 0.5em 0.5em 0.5em 0.5em;" onclick="clearInterval(checkPlayerQueueInterval);document.getElementById('monitor-ack').style.display='none';">Turn Off Player Queue Monitor</button>
+            </div>
+            <h5 id="monitor-ack" style="display:none;">Monitoring...</h5>
+            <div id="player-queue-monitor">
+
+            </div>
+        </div>
+    </div>
+    <div>
+        <div>
+            <h2>Game Server Monitor</h2>
+            <div style="display:flex; flex-direction: column;">
+                <button style="padding: 0.5em 0.5em 0.5em 0.5em;" onclick="monitorPlayerQueue()">Turn On Player Queue Monitor</button>
+                <button style="padding: 0.5em 0.5em 0.5em 0.5em;" onclick="clearInterval(checkPlayerQueueInterval);document.getElementById('monitor-ack').style.display='none';">Turn Off Player Queue Monitor</button>
+            </div>
+            <h5 id="monitor-ack" style="display:none;">Monitoring...</h5>
+            <div id="player-queue-monitor">
+
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script>
 
@@ -42,6 +89,12 @@
             success: function(result) {
                 console.log(result);
             },
+        });
+    }
+    function queryIDMapCache() {
+        $.ajax({
+            url: `/admin/query_id_map_cache`,
+            success: function(result) { console.log(result); }
         });
     }
 
@@ -72,6 +125,61 @@
             },
         });
     }
+    function queryGameServers() {
+        $.ajax({
+            url: "/admin/query_game_servers",
+            success: function(result) {
+                console.log(result);
+            },
+        });
+    }
+    let checkPlayerQueueInterval;
+    function monitorPlayerQueue() {
+        clearInterval(checkPlayerQueueInterval);
+        document.getElementById('monitor-ack').style.display='block';
+        checkPlayerQueueInterval = setInterval(() => {
+            $.ajax({
+                url: `/admin/monitor_player_queue`,
+                success: function(result) {
+                    let monitor = $('#player-queue-monitor');
+                    let htmlAddition = $.parseHTML(`
+                        <ul>
+                            ${result.players.map((p) => `<li>${p.id} - ${p.mmr}</li>`).join('\n')}
+                        </ul>
+                    `)
+                    monitor.html(htmlAddition);
+                },
+            });
+        }, parseFloat(document.getElementById('rate').value));
+    }
+
+    // let monitorSIDInterval;
+    // function monitorSID() {
+    //     clearInterval(monitorSIDInterval);
+    //     document.getElementById('sid-ack').style.display='block';
+    //     monitorSIDInterval = setInterval(() => {
+    //         $.ajax({
+    //             url: `/admin/monitor_sids`,
+    //             success: function(result) {
+    //                 console.log(result);
+    //                 let monitor = $('#sid-monitor');
+    //                 let newHTML = $.parseHTML(Object.entries(result.id_map).map((id, data) => {`
+    //                         <div>
+    //                             ${id}
+    //                         </div>
+    //                         <ul>
+    //                             <li>${data.username}</li>
+    //                             <li>${data.sid}</li>
+    //                         </ul>
+    //                         <button onclick="adminSendNotif('${data.sid}', 'hey')">Test SID</button>
+    //                         <button onclick="adminResetAllUserId('${id}')">Reset Matchmaking</button>
+    //                     `.join('\n')}));
+    //                 monitor.html(newHTML);
+    //             },
+    //         });
+    //     }, parseFloat(document.getElementById('rate').value));
+    // }
+
 </script>
 
 {% assets "matchmaking-js" %}

@@ -82,6 +82,21 @@ def create_app(config_class=Config):
         output='dist/matchmaking-js.js')
     assets.register('matchmaking-js', matchmaking_js)
     matchmaking_js.build(force=True)
+    friends_js = Bundle(
+        'blueprints/friends/static/js/**/*.js',
+        'blueprints/friends/static/js/*.js',
+        filters='jsmin',
+        output='dist/friends-js.js')
+    assets.register('friends-js', friends_js)
+    friends_js.build(force=True)
+    # friends_scss = Bundle(
+    #     'blueprints/friends/static/scss/**/*.scss',
+    #     'blueprints/friends/static/scss/*.scss',
+    #     'foo.scss', 'bar.scss',
+    #     filters='pyscss',
+    #     output='all.css'
+    # )
+    # assets.register('friends_scss', friends_scss)
 
     from app.models.user import User
     from app.models.unregistered_user import UnregisteredUser
@@ -152,6 +167,9 @@ def create_app(config_class=Config):
 
     from app.blueprints.matchmaking import bp as bp_matchmaking
     app.register_blueprint(bp_matchmaking)
+
+    from app.blueprints.friends import bp as bp_friends
+    app.register_blueprint(bp_friends)
 
     socketio.init_app(app)
 

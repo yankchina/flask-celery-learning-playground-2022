@@ -367,3 +367,148 @@ Traceback (most recent call last):
   File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
     success = current_app.game_manager.delete_game(game_id)
 AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-28 19:34:23 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-28 19:36:58 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-28 19:37:15 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-29 18:43:42 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-29 19:15:56 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-29 19:16:12 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-29 19:16:21 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-29 19:16:30 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-29 19:16:39 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-29 19:16:45 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-29 19:16:51 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-29 19:46:54 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-29 19:47:07 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-29 19:47:11 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-29 19:47:36 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-29 19:47:37 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-29 19:47:49 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-29 19:48:02 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-29 19:48:06 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-29 19:48:19 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-29 19:48:23 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-29 19:48:37 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-29 19:48:45 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-05-29 19:48:50 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-06-02 23:46:57 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-06-02 23:47:19 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-06-02 23:54:45 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-06-02 23:55:17 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'
+2022-06-03 18:01:31 | ERROR    | Line 16   | /app/app/blueprints/game_two/routes/game_deletion.py | Failed to delete game.
+Traceback (most recent call last):
+  File "/app/app/blueprints/game_two/routes/game_deletion.py", line 12, in delete_game
+    success = current_app.game_manager.delete_game(game_id)
+AttributeError: 'GameManager' object has no attribute 'delete_game'

@@ -1,0 +1,72 @@
+:root {
+    --friends-list-btn-width: 16rem;
+    --friends-list-btn-height: 3rem;
+    --messages-btn-width: 4rem;
+    --primary-friends-color: rgb(102, 82, 250);
+}
+
+
+#friends-general-btn {
+    position:fixed;
+    bottom:0;
+    right:0;
+    width: var(--friends-list-btn-width);
+    height: var(--friends-list-btn-height);
+    background: var(--primary-friends-color);
+    color:white;
+    margin-bottom:0;
+}
+#friends-list {
+    display:none;
+    flex-direction: column;
+    position:fixed;
+    cursor: default;
+    padding: 1rem;
+    bottom: var(--friends-list-btn-height);
+    right: 0;
+    width: var(--friends-list-btn-width);
+    height: 24rem;
+    border: 1px solid rgb(30, 30, 30) !important;
+    background: var(--primary-friends-color);
+    color:white;
+    z-index: 40;
+}
+#friends-list-friends {
+    display: flex;
+    flex-direction: column;
+}
+/* #general-friends-notification-count {
+    position: absolute;
+    display:none;
+    justify-content: center;
+    align-items: center;
+    left: 0rem;
+    top: -0.75rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: red;
+    border-radius:200px;
+    color:white;
+    z-index: 50;
+} */
+.friends-list-list-btn {
+    position:relative;
+}
+.friends-notif-div {
+    position: absolute;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    left: 0rem;
+    top: -0.75rem;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: red;
+    border-radius:200px;
+    color:white;
+    z-index: 50;
+}
+
+#friends-list-requests {display: none;}
+#friends-list-blocked {display: none;}
+#friends-list-recent {display: none;}

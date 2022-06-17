@@ -1,0 +1,68 @@
+{% macro html() %}
+
+<button id="friends-general-btn">
+    Friends List ( {{ friends_list|length }} )
+    <span id="friends-general-notification-div" class="friends-notif-div">0</span>
+</button>
+
+<div id="friends-list" class="paper-btn p-4" >
+    <div class="row" style="width: 100%;">
+        <button id="friends-list-btn" class="col-3 col padding-small friends-list-list-btn">
+            F
+            <span id="friends-list-notification-div" class="friends-notif-div">0</span>
+        </button>
+        <button id="friends-requests-btn" class="col-3 col padding-small friends-list-list-btn">
+            Req <!-- ({{ friend_requests|length }})  this needs a span and an id to increment as well if to be included -->
+            <span id="friends-requests-notification-div" class="friends-notif-div">0</span>
+        </button>
+        <button id="friends-blocked-btn" class="col-3 col padding-small friends-list-list-btn">
+            B
+            <span id="friends-blocked-notification-div" class="friends-notif-div">0</span>
+        </button>
+        <button id="friends-recent-btn" class="col-3 col padding-small friends-list-list-btn">
+            Rec
+            <span id="friends-recent-notification-div" class="friends-notif-div">0</span>
+        </button>
+    </div>
+
+    <ul id="friends-list-list">
+        {% for friend in friends_list %}
+        {% if 'tag' in friend %}
+        <li class="friends-list-friend paper-btn"><span class="friends-list-friend-tag">{{ friend.user_tag }}</span><span style="float:right"><button onclick="reqRemoveFriend('{{ friend.user_id }}')">-</span></li>
+        {% else %}
+        <li class="friends-list-friend paper-btn"><span class="friends-list-friend-tag">{{ friend.username }} {{ friend.user_type }}</span><span style="float:right"><button onclick="reqRemoveFriend('{{ friend.user_id }}')">-</button></span></li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+    <ul id="friends-list-requests">
+        {% for friend in friend_requests %}
+            {% if 'tag' in friend %}
+            <li>{{ friend.user_tag }}<span style="float:right"><button onclick="reqAddFriend('{{ friend.user_id }}')"></span></li>
+            {% else %}
+            <li>{{ friend.username }} {{ friend.user_type }}<span style="float:right"><button onclick="reqAddFriend('{{ friend.user_id }}')"></button></span></li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    <ul id="friends-list-blocked">
+        {% for friend in blocked_users %}
+        <li>{{ friend }}<span style="float:right"><button onclick="reqAddFriend({{ friend.user_id }})"></button></span></li>
+        {% endfor %}
+    </ul>
+    <ul id="friends-list-recent">
+        {% for friend in recently_played_with %}
+        <li>{{ friend }}<span style="float:right"><button onclick="reqAddFriend({{ friend.user_id }})"></button></span></li>
+        {% endfor %}
+    </ul>
+    <form class="row" style="margin-top:auto;" action="/friends/send_friend_request" method="POST">
+        <label for="user_tag">User Tag</label>
+        <input type="text" name="user_tag" placeholder="doodler#5h3b">
+        <button type="submit">Send Friend Request</button>
+    </form>
+    <div>
+        My Tag: {{ user_tag }}
+    </div>
+</div>
+
+<link href="{{ url_for('friends.static', filename='css/main.css') }}" rel="stylesheet" />
+
+{% endmacro %}

@@ -6,7 +6,6 @@ from app.blueprints.matchmaking import bp
 from app.blueprints.matchmaking.tasks import find_match
 
 
-
 @bp.route('/join_matchmaking')
 @login_required
 def join_matchmaking_route():

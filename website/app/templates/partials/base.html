@@ -1,5 +1,7 @@
 {% from "matchmaking/queue_timer.html" import queue_timer with context %}
 {% from "matchmaking/match_found.html" import match_found with context %}
+{% import "friends/friends_list.html" as friends_list with context %}
+{% import "friends/messages.html" as friend_messages with context %}
 {% from "components/notification_div.html" import notification_div with context %}
 {% from "admin/macros/admin_notification.html" import admin_notification with context %}
 <!DOCTYPE html>
@@ -16,6 +18,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/7.5.5/rxjs.umd.js" integrity="sha512-aK/ye33+7EwET3S9lsTCva4L8J3Dms0Zr5gBmZoK583n4kSxcWM4fnnXwR41kN+gPO7U5/qLdQrabiOnKrYb6g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <style>
+        * {
+            border: 1px dashed black;
+        }
+    </style>
+{% block styles %}
+{% endblock %}
+    <link href="{{ url_for('static', filename='css/paper.min.css') }}" rel="stylesheet">
 </head>
 
 
@@ -27,6 +38,8 @@
 
     {{ match_found() }}
     {{ queue_timer() }}
+    {{ friends_list.html() }}
+    {{ friend_messages.html() }}
     {{ notification_div() }}
     {{ admin_notification() }}
 </body>
@@ -50,11 +63,13 @@
 
 
 {% block scripts %}
-
 {% endblock %}
 
 
 {% assets "app-js" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{% endassets %}
+{% assets "friends-js" %}
     <script type="text/javascript" src="{{ ASSET_URL }}"></script>
 {% endassets %}
 

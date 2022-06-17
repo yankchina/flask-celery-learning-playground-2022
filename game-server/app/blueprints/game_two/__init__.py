@@ -7,4 +7,4 @@ bp = Blueprint(
     static_folder="static"
 )
 
-from app.blueprints.game_two.routes import connection, game_creation, test, game_deletion
+from app.blueprints.game_two.routes import connection, game_creation, test, game_deletion, queries

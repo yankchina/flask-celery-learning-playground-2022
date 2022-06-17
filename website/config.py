@@ -35,6 +35,8 @@ class Config(object):
 
     GAME_SERVER_AUTHENTICATION_KEY = os.environ.get('GAME_SERVER_AUTHENTICATION_KEY', 'update-game-server-auth-key')
 
+    GAME_SERVERS = [f'game-server-{i}' for i in range(1, 2)]
+
 class ShellConfig(Config):
     MONGODB_SETTINGS = {
         "db": "doodler-website",

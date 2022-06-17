@@ -12,6 +12,7 @@ from app.blueprints.admin.route_protection import admin_required
 from app.blueprints.admin.forms import LoginForm
 from app.blueprints.admin.sockets import emit_admin_notification
 from app.blueprints.matchmaking.resets import reset_all
+from app.blueprints.matchmaking.internal_network.game_server.request import request_game_info, request_game_info_from_all_servers
 
 
 @bp.route('/control_panel')
@@ -90,6 +91,13 @@ def send_notification_to_sid():
     emit_admin_notification(sid, msg)
     return jsonify({'success': True})
 
+@bp.route('/query_id_map_cache')
+@login_required
+@admin_required
+def query_id_map_cache():
+    id_map = cache.get('id_map') or {}
+    return jsonify({'success': True, 'id_map': id_map})
+
 @bp.route('/clear_id_map_cache')
 @login_required
 @admin_required
@@ -109,3 +117,39 @@ def reset_all_matchmaking_user_id():
 def logout():
     logout_user()
     return redirect(url_for('main.index'))
+
+@bp.route('/get_active_games_on_game_server')
+@login_required
+@admin_required
+def get_active_games_on_game_server():
+    resp = request.get('query_games_running')
+    return jsonify({'success': resp.json})
+
+@bp.route('/monitor_player_queue')
+@login_required
+@admin_required
+def monitor_player_cache():
+    players = cache.get('queued-players')
+    return jsonify({'success': True, 'players': players})
+
+@bp.route('/monitor_sids')
+@login_required
+@admin_required
+def monitor_sids():
+    id_map = cache.get('id_map') or {}
+    return jsonify({'success': True, 'id_map': id_map})
+
+@bp.route('/monitor_game_servers')
+@login_required
+@admin_required
+def monitor_game_servers():
+    id_map = cache.get('id_map') or {}
+    return jsonify({'success': True, 'id_map': id_map})
+
+@bp.route('/query_game_servers')
+@login_required
+@admin_required
+def query_game_servers():
+    # server_info = request_game_info_from_all_servers()
+    resp = request_game_info('game-server-1', 5001)
+    return resp

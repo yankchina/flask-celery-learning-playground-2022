@@ -5,6 +5,7 @@ from flask import current_app
 # from .party import PartyMixin
 import app.models.party as p
 import app.blueprints.matchmaking.models as m
+import app.blueprints.friends.mixins as f
 
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
@@ -15,11 +16,12 @@ from time import time
 
 
 
-class User(UserMixin, me.Document, p.PartyMixin, m.MatchmakingMixin):
+class User(UserMixin, me.Document, p.PartyMixin, m.MatchmakingMixin, f.FriendsMixin):
     # meta = { 'collection': cfg.get('USERS_COLLECTION'), 'strict': False}
     meta = {'strict': False}
     username = me.StringField(min_length=3, max_length=16)
     username_lower = me.StringField(min_length=3, max_length=16, unique=True)
+    user_tag = me.StringField()
     email = me.EmailField(required=True, unique=True)
     email_verified = me.BooleanField(default=False)
     password_hash = me.StringField(required=True)
@@ -39,6 +41,7 @@ class User(UserMixin, me.Document, p.PartyMixin, m.MatchmakingMixin):
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
+        self.user_tag = self.username
 
     def can_join_party(self):
         return False if self.party_id else True

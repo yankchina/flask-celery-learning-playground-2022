@@ -1,6 +1,7 @@
 function addToScore(){console.log(gameSocket);gameSocket.emit('add_to_score',{'he':'test','there':'t2'})}
 let hideNotification;function showNotification(resultObject){if(hideNotification){clearTimeout(hideNotification);}
 let div=document.getElementById('notification_div');div.style.display='block';div.style.background=resultObject.success?"green":"red";div.innerText=resultObject.message;hideNotification=setTimeout(()=>{div.style.display='none';},5000);}
+function htmlToElement(html){var template=document.createElement('template');template.innerHTML=html;return template.content.firstChild;}
 const SOUNDS_ON=true;const VOL_HALF=[]
 const VOL_DOUBLE=[]
 function playAtVolume(sound,vol){if(!vol){vol=0.2;}

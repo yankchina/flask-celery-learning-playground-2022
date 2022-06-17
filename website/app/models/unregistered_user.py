@@ -5,14 +5,16 @@ from flask import current_app
 from flask_login import UserMixin
 import app.models.party as p
 import app.blueprints.matchmaking.models as m
+import app.blueprints.friends.mixins as f
 
 
 
 
-class UnregisteredUser(UserMixin, me.Document, p.PartyMixin, m.MatchmakingMixin):
+class UnregisteredUser(UserMixin, me.Document, p.PartyMixin, m.MatchmakingMixin, f.FriendsMixin):
     # meta = { 'collection': cfg.get('UNREGISTERED_USERS_COLLECTION'), 'strict': False}
     meta = {'strict': False}
-    username = me.StringField(min_length=3, max_length=16)
+    username = me.StringField(default="doodler", min_length=3, max_length=16)
+    user_tag = me.StringField()
     unregistered_tag = me.StringField()
     mmr = me.IntField(default=1000)
     datetime_joined_queue = me.DateTimeField()
@@ -29,9 +31,12 @@ class UnregisteredUser(UserMixin, me.Document, p.PartyMixin, m.MatchmakingMixin)
     def __init__(self, **kwargs):
         super(UnregisteredUser, self).__init__(**kwargs)
         self.unregistered_tag = str(self.id)[-4:]
+        self.user_tag = f'{self.username}#{self.unregistered_tag}'
+        self.save()
 
     def update_username(self, username):
         self.username = username
+        self.user_tag = f'{username}#{self.unregistered_tag}'
         self.save()
 
     def can_join_party(self):
@@ -41,6 +46,7 @@ class UnregisteredUser(UserMixin, me.Document, p.PartyMixin, m.MatchmakingMixin)
         json_user = {
             'username': self.username,
             'tag': self.unregistered_tag,
+            'user_tag': self.user_tag,
             'member_since': self.member_since,
             'last_seen': self.last_seen,
             'datetime_joined_queue': self.datetime_joined_queue,

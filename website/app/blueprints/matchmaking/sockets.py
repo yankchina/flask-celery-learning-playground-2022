@@ -27,11 +27,14 @@ def send_match_found_accept_request_to_users(user_ids: list):
     # generate a cache_key that the user sends their result to
     cache_key = str(uuid.uuid4())
     cache.set(cache_key, {user: False for user in user_ids})
+
+    id_map = cache.get('id_map') or {}
     for id_ in user_ids:
-        user = get_user_from_id(id_)
-        # optimization opportunity; can pull the id_map and then iterate over it once
-        sid = get_key_from_id_map_cache(id_, 'sid')
-        emit_match_found_accept_request_to_user(sid, cache_key)
+        sid = id_map.get(id_, {}).get('sid')
+
+        # this makes sure we actually got an sid for the user, if not then it would send to all clients
+        if sid:
+            emit_match_found_accept_request_to_user(sid, cache_key)
     return cache_key
 
 @socketio.on('match_found_choice')
