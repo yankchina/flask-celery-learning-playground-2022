@@ -1,18 +1,19 @@
 
-function focusUserTagMessages(userTag) {
-    let list = document.getElementById('friends-messages-friends-friends');
+
+function focusUserTag(userTag) {
     let userTagElem = document.querySelector(`[data-user-tag="${userTag}"]`);
     if (!userTagElem) {
-        // create one
-        userTagElem = htmlToElement(`
-            <div data-user-tag="${userTag}">
-                ${userTag}
-            </div>`
-        );
-        list.insertBefore(userTagElem, list.firstChild);
-        userTagElem.addEventListener('click', clickUserTagInMessages);
+        userTagElem = addUserTagToMessages(userTag)
+        initializeUserTagElem(userTagElem);
     }
-    userTagElem.click();
-    // unsetAllMessagesUserTagActive();
-    // setMessagesUserTagActive(userTag);
+    let list = document.getElementById('friends-messages-friends-friends');
+    let messages = reqGetFriendMessages(userTag);
+    moveChildToFirstChild(userTagElem, list);
+    removeActiveFromMessageUserTags();
+    addActiveToMessageUserTag(userTagElem);
+    friendUserTagSelected = userTag;
+}
+
+function getFocusedFriendTagMessages() {
+    return document.querySelector(`[data-user-tag].active`);
 }

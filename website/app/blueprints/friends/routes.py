@@ -21,11 +21,11 @@ def send_friend_request():
     user = get_user_from_tag(user_tag)
     if not user:
         return jsonify({'success': False, 'message': 'Could not find user with that tag'})
+    if isinstance(user, dict): # means we failed and are returning failure object
+        return jsonify(user)
 
-    prnt(user)
     user.add_to_friend_requests(str(current_user.id))
     sid = get_sid_from_user_id(str(user.id))
-    prnt(sid)
     emit_friend_request_to_sid(sid, current_user.user_tag)
     return jsonify({'success': True, 'message': f'Sent friend request to user'})
 
@@ -65,8 +65,11 @@ def send_friend_message():
     user = get_user_from_tag(user_tag)
     if not user:
         return jsonify({'success': False, 'message': 'Could not find user with that tag'})
-    user.send_message_to_user(str(current_user.id))
-    return jsonify({'success': True, 'message': f'Sent message to friend'})
+    if isinstance(user, dict): # means we failed and are returning failure object
+        return jsonify(user)
+    result = current_user.send_message_to_user(message, str(user.id))
+    return result
+    # return jsonify({'success': True, 'message': f'Sent message to friend'})
 
 @bp.route('/get_friend_messages', methods=["POST"])
 def get_friend_messages():
@@ -77,6 +80,8 @@ def get_friend_messages():
     user = get_user_from_tag(user_tag)
     if not user:
         return jsonify({'success': False, 'message': 'Could not find user with that tag'})
+    if isinstance(user, dict): # means we failed and are returning failure object
+        return jsonify(user)
     user_id = str(user.id)
     messages = current_user.get_friend_messages(user_id)
 

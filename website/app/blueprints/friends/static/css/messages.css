@@ -44,6 +44,23 @@
     fill: currentColor;
     z-index: 50;
 }
+.friends-user-tag-notification-div {
+    position:absolute;
+    display:none;
+    justify-content: center;
+    align-items: center;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: red;
+    width: 1.5rem;
+    height: 1.5rem;
+    padding-top:2px;
+    border-radius:200px;
+    color:white;
+    fill: currentColor;
+    z-index: 50;
+}
 #friends-message-img {
     width:1.5rem;
     height:1.5rem;
@@ -53,6 +70,7 @@
     position: absolute;
     width:4rem;
     height:90%;
+    padding: 0.2rem;
     left:-1rem;
     z-index:20;
     border: 1px solid rgb(30, 30, 30) !important;
@@ -101,6 +119,7 @@
     overflow:hidden;
 }
 #friends-messages-friends-friends div {
+    position: relative;
     padding: 0.25rem;
     padding-left: 0;
 }

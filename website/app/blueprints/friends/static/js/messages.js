@@ -1,11 +1,15 @@
+function getFriendMessageHtml(message) {
+    return `<div class="friends-messages-friend-message">${message}</div>`
+}
 
+function getSelfMessageHtml(message) {
+    return `<div class="friends-messages-self-message">${message}</div>`
+}
 
-function getMessageHtml(messages, self_id) {
+function getMessagesHtml(messages, self_id) {
     let html = '<div>';
     for (let msg of messages) {
-        html += `<div class="${msg.user_id == self_id ? 'friends-messages-friend-message' : 'friends-messages-self-message'}">
-${msg.message}
-</div>`
+        html += (msg.user_id == self_id) ? getSelfMessageHtml(msg.message) : getFriendMessageHtml(msg.message);
     }
     html+='</div>'
     return html;

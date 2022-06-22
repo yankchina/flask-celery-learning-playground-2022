@@ -7,6 +7,7 @@ import mongoengine as me
 from app.blueprints.friends.cache_helpers import get_sid_from_user_id
 from app.blueprints.friends.sockets import emit_friend_message_to_sid
 from app.helpers.models import get_user_from_id
+from slg_utilities.helpers import prnt
 
 
 class FriendsMixin:
@@ -89,7 +90,7 @@ class FriendsMixin:
         '''
         message_dict = {}
         for msg in self.friend_messages:
-            if msg.user_id not in message_dict:
+            if msg['user_id'] not in message_dict:
                 message_dict[msg['user_id']] = {'messages': [], 'user_tag': get_user_from_id(msg['user_id']).user_tag}
 
             message_dict[msg['user_id']]['messages'].append({
@@ -104,26 +105,32 @@ class FriendsMixin:
         return message_dict
 
     def add_to_friend_messages(self, message, user_id, time):
-        self.friend_messages.append(FriendMessage(
-            user_id=user_id,
-            message=message,
-            time=time
-        ))
+        self.friend_messages.append({
+            'user_id':user_id,
+            'message':message,
+            'time':time
+        })
         self.save()
 
     def send_message_to_user(self, message, user_id, depth=0):
+        # prnt('trying to send?')
         friend = get_user_from_id(user_id)
-        if friend in self.friends_list:
+        # prnt(friend)
+        # prnt(friend.user_tag)
+        # prnt(friend.friends_list)
+        # prnt(self.friends_list)
+        # prnt(get_sid_from_user_id(user_id))
+        if str(friend.id) in self.friends_list:
             self.add_to_friend_messages(message, user_id, datetime.now())
             if depth == 0:
                 # send the message back to ourself, but without the emit
                 friend.send_message_to_user(message, str(self.id), depth=1)
-                emit_friend_message_to_sid(message, get_sid_from_user_id(user_id))
+                emit_friend_message_to_sid(self.user_tag, message, get_sid_from_user_id(user_id))
+                return jsonify({'success': True, 'message': f'Sent message to friend'})
         else:
             return jsonify({'success': False, 'message': 'User not in friends list'})
 
 
-@dataclass
 class FriendMessage:
     user_id: str
     message: str
