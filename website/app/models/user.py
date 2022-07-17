@@ -3,7 +3,7 @@ import mongoengine as me
 from flask import current_app
 
 # from .party import PartyMixin
-import app.models.party as p
+# import app.models.party as p
 import app.blueprints.matchmaking.models as m
 import app.blueprints.friends.mixins as f
 
@@ -16,7 +16,7 @@ from time import time
 
 
 
-class User(UserMixin, me.Document, p.PartyMixin, m.MatchmakingMixin, f.FriendsMixin):
+class User(UserMixin, me.Document, f.PartyMixin, m.MatchmakingMixin, f.FriendsMixin):
     # meta = { 'collection': cfg.get('USERS_COLLECTION'), 'strict': False}
     meta = {'strict': False}
     username = me.StringField(min_length=3, max_length=16)

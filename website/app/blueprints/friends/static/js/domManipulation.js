@@ -1,16 +1,31 @@
+function clearInput(elem) {
+    elem.value = '';
+}
+
 function moveChildToFirstChild(child, parent) {
     parent.removeChild(child);
     parent.insertBefore(child, parent.firstChild);
 }
 
-function setMessagesInFriendMessagesDiv(messages, self_id) {
-    document.getElementById('friends-messages-user-messages').innerHTML = htmlToElement(getMessagesHtml(messages, self_id));
+function setMessagesInFriendMessagesDiv(messages) {
+    let elem = document.getElementById('friends-messages-user-messages')
+    elem.innerHTML = '';
+    elem.appendChild(htmlToElement(getFriendMessagesHtml(messages)));
+}
+function setMessagesInFriendPartyDiv(messages) {
+    let elem = document.getElementById('friends-party-user-messages');
+    elem.innerHTML = '';
+    elem.appendChild(htmlToElement(getFriendPartyMessagesHtml(messages)));
+}
+function setNotInPartyInPartyDiv() {
+    let elem = document.getElementById('friends-party-user-messages');
+    elem.innerHTML = 'Not in party.';
 }
 
 function addMessageToFriendMessages(message, type="self") {
     // type options: ['self', 'friend']
     document.querySelector('#friends-messages-user-messages > div').appendChild(
-        (type == "self") ? getSelfMessageHtml(message) : getFriendMessageHtml(message)
+        (type == "self") ? htmlToElement(getSelfMessageHtml(message)) : htmlToElement(getFriendMessageHtml(message))
     )
 }
 

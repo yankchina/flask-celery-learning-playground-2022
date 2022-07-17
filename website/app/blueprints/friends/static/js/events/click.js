@@ -17,6 +17,10 @@ document.querySelector('#friends-messages-btn').addEventListener('click', (e) =>
     toggleMessagesList();
     resetFriendsNotification('messages');
 });
+document.querySelector('#friends-party-btn').addEventListener('click', (e) => {
+    togglePartyList();
+    resetFriendsNotification('party');
+});
 for (let type of ['list', 'requests', 'blocked', 'recent']) {
     document.getElementById(`friends-${type}-btn`).addEventListener('click', () => {
         showFriendsListVariation(type);
@@ -33,6 +37,7 @@ function clickUserTagInFriendsList(e) {
 
     // this is to handle for if the span with the user_tag is clicked
     let userTag = (e.target.firstChild.innerText === undefined) ? e.target.innerText : e.target.firstChild.innerText;
+    let userTagElem = getElemFromUserTag(userTag);
 
     focusUserTag(userTag);
     resetUserTagNotification(userTagElem);

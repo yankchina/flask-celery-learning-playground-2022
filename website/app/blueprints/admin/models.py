@@ -2,10 +2,10 @@ import mongoengine as me
 from flask_login import UserMixin
 import app.blueprints.matchmaking.models as m
 import app.blueprints.friends.mixins as f
-import app.models.party as p
+# import app.models.party as p
 
 
-class Admin(UserMixin, me.Document, p.PartyMixin, m.MatchmakingMixin, f.FriendsMixin):
+class Admin(UserMixin, me.Document, f.PartyMixin, m.MatchmakingMixin, f.FriendsMixin):
 
     meta = {'strict': False}
     username = me.StringField(min_length=3, max_length=16)

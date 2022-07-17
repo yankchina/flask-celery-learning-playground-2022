@@ -12,56 +12,18 @@
         Friends
 
         <div id="friends-messages-friends-friends">
-            <div data-user-tag="doodler#293j">
-                doodler#293j
-                <span class="friends-user-tag-notification-div"></span>
+            {% for user_tag in recent_friends_contacted %}
+            <div data-user-tag="{{ user_tag }}">
+                {{ user_tag }}
+                <span class="friends-user-tag-notification-div">0</span>
             </div>
-            <div data-user-tag="doodler#32jj">
-                doodler#32jj
-                <span class="friends-user-tag-notification-div"></span>
-            </div>
-
+            {% endfor %}
         </div>
     </div>
     <div id="friends-messages-messages">
         <div id="friends-messages-user-messages" class="">
             <div>
-            <div class="friends-messages-friend-message">
-                Yo whats up mane
-            </div>
-            <div class="friends-messages-friend-message">
-                Yo whats up mane
-            </div>
-            <div class="friends-messages-friend-message">
-                Yo whats up mane
-            </div>
-            <div class="friends-messages-friend-message">
-                Yo whats up mane
-            </div>
-            <div class="friends-messages-friend-message">
-                Yo whats up mane
-            </div>
-            <div class="friends-messages-friend-message">
-                Yo whats up mane
-            </div>
-            <div class="friends-messages-friend-message">
-                Yo whats up mane
-            </div>
-            <div class="friends-messages-friend-message">
-                Yo whats up mane
-            </div>
-            <div class="friends-messages-friend-message">
-                Yo whats up mane
-            </div>
-            <div class="friends-messages-friend-message">
-                Yo whats up mane
-            </div>
-            <div class="friends-messages-friend-message">
-                Yo whats up mane
-            </div>
-            <div class="friends-messages-self-message">
-                Hey bud
-            </div>
+                <!-- Populated when friend is focused -->
             </div>
         </div>
         <input id="send-friend-message-input" name="message" placeholder="Type here...">

@@ -3,14 +3,15 @@ from datetime import datetime
 import mongoengine as me
 from flask import current_app
 from flask_login import UserMixin
-import app.models.party as p
+# import app.models.party as p
 import app.blueprints.matchmaking.models as m
-import app.blueprints.friends.mixins as f
+# import app.blueprints.friends.mixins as f
+
+from app.blueprints.friends.mixins import FriendsMixin, PartyMixin
 
 
 
-
-class UnregisteredUser(UserMixin, me.Document, p.PartyMixin, m.MatchmakingMixin, f.FriendsMixin):
+class UnregisteredUser(UserMixin, me.Document, PartyMixin, m.MatchmakingMixin, FriendsMixin):
     # meta = { 'collection': cfg.get('UNREGISTERED_USERS_COLLECTION'), 'strict': False}
     meta = {'strict': False}
     username = me.StringField(default="doodler", min_length=3, max_length=16)

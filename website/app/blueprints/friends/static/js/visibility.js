@@ -1,24 +1,11 @@
 let friendsListOpen = false;
 let messagesListOpen = false;
+let partyListOpen = false;
 
-function toggleFriendsList() {
-    if (friendsListOpen) {
-        document.getElementById('friends-list').style.display = 'none';
-        friendsListOpen = false;
-    } else {
-        document.getElementById('friends-list').style.display = 'flex';
-        friendsListOpen = true;
-    }
-}
-function toggleMessagesList() {
-    if (messagesListOpen) {
-        document.getElementById('friends-messages-list').style.display = 'none';
-        messagesListOpen = false;
-    } else {
-        document.getElementById('friends-messages-list').style.display = 'flex';
-        messagesListOpen = true;
-    }
-}
+function toggleFriendsList() { (friendsListOpen) ? closeFriendsList() : openFriendsList(); }
+function toggleMessagesList() { (messagesListOpen) ? closeMessagesList() : openMessagesList(); }
+function togglePartyList() { (partyListOpen) ? closePartyList() : openPartyList(); }
+
 function openFriendsList() {
     document.getElementById('friends-list').style.display = 'flex';
     friendsListOpen = true;
@@ -26,6 +13,7 @@ function openFriendsList() {
 function openMessagesList() {
     document.getElementById('friends-messages-list').style.display = 'flex';
     messagesListOpen = true;
+    scrollMessagesToBottom();
 }
 function closeFriendsList() {
     document.getElementById('friends-list').style.display = 'none';
@@ -34,6 +22,16 @@ function closeFriendsList() {
 function closeMessagesList() {
     document.getElementById('friends-messages-list').style.display = 'none';
     messagesListOpen = false;
+}
+function openPartyList() {
+    document.getElementById('friends-party-list').style.display = 'flex';
+    focusParty();
+    partyListOpen = true;
+    scrollPartyToBottom();
+}
+function closePartyList() {
+    document.getElementById('friends-party-list').style.display = 'none';
+    partyListOpen = false;
 }
 function showFriendsListVariation(variation) {
     hideAllFriendLists();

@@ -6,6 +6,8 @@ from app.blueprints.friends.cache_helpers import get_sid_from_user_id
 from app.blueprints.friends.sockets import emit_friend_request_to_sid
 from slg_utilities.helpers import prnt
 
+from app.blueprints.friends.test import TEST_PARTY_MESSAGES
+
 
 
 @bp.route('/friend_test', methods=["GET"])
@@ -26,7 +28,7 @@ def send_friend_request():
 
     user.add_to_friend_requests(str(current_user.id))
     sid = get_sid_from_user_id(str(user.id))
-    emit_friend_request_to_sid(sid, current_user.user_tag)
+    emit_friend_request_to_sid(sid, current_user.user_tag, str(current_user.id))
     return jsonify({'success': True, 'message': f'Sent friend request to user'})
 
 @bp.route('/add_friend', methods=["POST"])
@@ -86,3 +88,32 @@ def get_friend_messages():
     messages = current_user.get_friend_messages(user_id)
 
     return jsonify({'success': True, 'message': f'Successfully acquired friend messages', 'messages': messages})
+
+@bp.route('/get_party_messages', methods=["GET"])
+def get_party_messages():
+    print('getting messages', flush=True)
+    party = current_user.get_party()
+    print(party)
+    if party:
+        messages = party.messages
+    else:
+        # messages = TEST_PARTY_MESSAGES
+        messages = "not in party"
+
+    return jsonify({'success': True, 'message': f'Successfully acquired friend messages', 'messages': messages})
+
+@bp.route('/send_party_invite', methods=["POST"])
+def send_party_invite():
+    current_user.send_party_invite(request.form.get('user_id'))
+    return jsonify({'success': True, 'message': f'Successfully acquired friend messages'})
+
+@bp.route('/accept_party_invite', methods=["POST"])
+def accept_party_invite():
+    inviting_user = get_user_from_tag(request.form.get('user_tag'))
+    current_user.accept_party_invite(str(inviting_user.id))
+    return jsonify({'success': True, 'message': f''})
+
+@bp.route('/decline_party_invite', methods=["POST"])
+def decline_party_invite():
+    current_user.decline_party_invite(request.form.get('user_tag'))
+    return jsonify({'success': True, 'message': f'Successfully acquired friend messages'})

@@ -2,6 +2,7 @@
 {% from "matchmaking/match_found.html" import match_found with context %}
 {% import "friends/friends_list.html" as friends_list with context %}
 {% import "friends/messages.html" as friend_messages with context %}
+{% import "friends/party.html" as friends_party with context %}
 {% from "components/notification_div.html" import notification_div with context %}
 {% from "admin/macros/admin_notification.html" import admin_notification with context %}
 <!DOCTYPE html>
@@ -38,6 +39,7 @@
 
     {{ match_found() }}
     {{ queue_timer() }}
+    {{ friends_party.html() }}
     {{ friends_list.html() }}
     {{ friend_messages.html() }}
     {{ notification_div() }}

@@ -9,20 +9,20 @@ from flask import current_app
 
 
 
-class PartyMixin:
-    def party_size(self):
-        if isinstance(self, Party):
-            return len(self.users)
-        # if isinstance(self, GenericUser):
-        if isinstance(self, u.User) or isinstance(self, uu.UnregisteredUser):
-            return 1
+# class PartyMixin:
+#     def party_size(self):
+#         if isinstance(self, Party):
+#             return len(self.users)
+#         # if isinstance(self, GenericUser):
+#         if isinstance(self, u.User) or isinstance(self, uu.UnregisteredUser):
+#             return 1
 
-    def party_users(self):
-        if isinstance(self, Party):
-            return self.users
-        # if isinstance(self, GenericUser):
-        if isinstance(self, u.User) or isinstance(self, uu.UnregisteredUser):
-            return [str(self.id)]
+#     def party_users(self):
+#         if isinstance(self, Party):
+#             return self.users
+#         # if isinstance(self, GenericUser):
+#         if isinstance(self, u.User) or isinstance(self, uu.UnregisteredUser):
+#             return [str(self.id)]
 
 
 class Party(me.Document, PartyMixin):

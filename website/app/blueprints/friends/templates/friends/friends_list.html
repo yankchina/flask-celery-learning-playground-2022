@@ -27,11 +27,15 @@
 
     <ul id="friends-list-list">
         {% for friend in friends_list %}
-        {% if 'tag' in friend %}
-        <li class="friends-list-friend paper-btn"><span class="friends-list-friend-tag">{{ friend.user_tag }}</span><span style="float:right"><button onclick="reqRemoveFriend('{{ friend.user_id }}')">-</span></li>
-        {% else %}
-        <li class="friends-list-friend paper-btn"><span class="friends-list-friend-tag">{{ friend.username }} {{ friend.user_type }}</span><span style="float:right"><button onclick="reqRemoveFriend('{{ friend.user_id }}')">-</button></span></li>
-        {% endif %}
+        <li class="friends-list-friend paper-btn">
+            <span class="friends-list-friend-tag">
+                {% if 'tag' in friend %} {{ friend.user_tag }} {% else %} {{ friend.username }} {{ friend.user_type }} {% endif %}
+            </span>
+            <span style="float:right">
+                <button style="background: green;" onclick="sendPartyInvite('{{ friend.user_id }}'); event.stopPropagation();">+</button>
+                <button onclick="reqRemoveFriend('{{ friend.user_id }}')">-</button>
+            </span>
+        </li>
         {% endfor %}
     </ul>
     <ul id="friends-list-requests">

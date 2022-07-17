@@ -1,7 +1,7 @@
 
 
 function setMessagesUserTagActive(userTag) {
-    userTagElem = document.querySelector(`[data-user-tag="${userTag}"]`).classList.add('active');
+    userTagElem = getElemFromUserTag(userTag).classList.add('active');
 }
 function addActiveToMessageUserTag(elem) {
     elem.classList.add('active');

@@ -1,27 +1,73 @@
 from collections import defaultdict
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask import current_app, jsonify
 
 import mongoengine as me
 from app.blueprints.friends.cache_helpers import get_sid_from_user_id
-from app.blueprints.friends.sockets import emit_friend_message_to_sid
-from app.helpers.models import get_user_from_id
+from app.blueprints.friends.sockets import emit_friend_message_to_sid, emit_party_invite_to_sid
+from app.helpers.models import get_user_from_id, get_user_from_tag
 from slg_utilities.helpers import prnt
 
+from app.blueprints.friends.models import Party
+
+class PartyMixin:
+
+    party_id = me.StringField(default='')
+
+    def __init__(self):
+        pass
+
+    def get_party(self):
+        if self.party_id:
+            return Party.objects.get(id=self.party_id)
+        else:
+            return None
+
+    def send_party_invite(self, user_id):
+        # check if we are currently in party
+        if self.party_id:
+            party = self.get_party()
+
+            # check if user is in party
+            if user_id in party.members:
+                return jsonify({'success': False, 'message': 'User is already in party'})
+
+            if self.user_id != party.leader:
+                if party.settings.get('leader_invite_only'):
+                    return jsonify({'success': False, 'message': 'Sending user not authorized to invite'})
+
+            if party.size >= party.max_size:
+                return jsonify({'success': False, 'message': 'Party is full'})
+
+            user = get_user_from_id(user_id)
+            if not user:
+                return jsonify({'success': False, 'message': 'No user found with that ID'})
+
+            # send invitation
+            emit_party_invite_to_sid(self.user_tag, get_sid_from_user_id(user_id))
+
+        else:
+            # create a new party and make ourselves the leader
+            party = Party(str(self.id))
+            self.party_id = str(party.id)
+            self.save()
+            self.send_party_invite(user_id)
+
+    def accept_party_invite(self, inviting_user_id):
+        if self.party_id:
+            return jsonify({'success': False, 'message': 'User is already in party'})
+
+        inviting_user = get_user_from_id(inviting_user_id)
+        party = inviting_user.get_party()
+        return party.add_member(inviting_user, str(self.id))
+
+    def send_party_message(self, message):
+        pass
 
 class FriendsMixin:
-    '''
-    This requires these properties in the parent class:
-
-        friends_list = me.ListField(default=[])
-        friend_messages = me.ListField(default=[])
-        friend_requests = me.ListField(default=[])
-        blocked_users = me.ListField(default=[])
-        recently_played_with = me.ListField(default=[])
-    '''
     friends_list = me.ListField(default=[])
-    friend_messages = me.ListField(default=[])
+    friend_messages = me.DictField(default={})
     friend_requests = me.ListField(default=[])
     blocked_users = me.ListField(default=[])
     recently_played_with = me.ListField(default=[])
@@ -74,54 +120,29 @@ class FriendsMixin:
         return True
 
     def get_friend_messages(self, friend_id, sort=True):
-        output = list(filter(lambda msg: msg['user_id'] == friend_id, self.friend_messages))
-        return sorted(output, key=lambda msg: msg['time']) if sort else output
+        if friend_id in self.friend_messages:
+            return self.friend_messages[friend_id]
+        else:
+            return []
 
-    def get_friend_message_dict(self, sort_by="datetime"):
-        '''
-        Return object
-
-            {user_id: {
-                'username': friend_username,
-                'messages': list_of_messages of type FriendMessage sorted by datetime
-            },
-                ...
-            }
-        '''
-        message_dict = {}
-        for msg in self.friend_messages:
-            if msg['user_id'] not in message_dict:
-                message_dict[msg['user_id']] = {'messages': [], 'user_tag': get_user_from_id(msg['user_id']).user_tag}
-
-            message_dict[msg['user_id']]['messages'].append({
-                'message': msg['message'],
-                'time': msg['time']
-            })
-
-        if sort_by == 'datetime':
-            for id_ in message_dict:
-                message_dict[id_]['messages'] = sorted(message_dict[id_]['messages'], key=lambda msg: msg['time'])
-
-        return message_dict
-
-    def add_to_friend_messages(self, message, user_id, time):
-        self.friend_messages.append({
-            'user_id':user_id,
+    def add_to_friend_messages(self, message, user_id, who, time):
+        if user_id not in self.friend_messages:
+            self.friend_messages[user_id] = []
+        self.friend_messages[user_id].append({
             'message':message,
-            'time':time
+            'time':time,
+            'who': who, # self or friend
         })
         self.save()
 
     def send_message_to_user(self, message, user_id, depth=0):
-        # prnt('trying to send?')
         friend = get_user_from_id(user_id)
-        # prnt(friend)
-        # prnt(friend.user_tag)
-        # prnt(friend.friends_list)
-        # prnt(self.friends_list)
-        # prnt(get_sid_from_user_id(user_id))
         if str(friend.id) in self.friends_list:
-            self.add_to_friend_messages(message, user_id, datetime.now())
+            if depth == 0:
+                who = 'self'
+            else:
+                who = 'friend'
+            self.add_to_friend_messages(message, user_id, who, datetime.now())
             if depth == 0:
                 # send the message back to ourself, but without the emit
                 friend.send_message_to_user(message, str(self.id), depth=1)
@@ -130,8 +151,14 @@ class FriendsMixin:
         else:
             return jsonify({'success': False, 'message': 'User not in friends list'})
 
-
-class FriendMessage:
-    user_id: str
-    message: str
-    time: datetime
+    def get_recent_friends_contacted(self, num_days=14):
+        '''
+        Return a list of user_ids of friends who have been contacted in the last num_days days.
+        '''
+        now = datetime.now()
+        cutoff = now - timedelta(days=num_days)
+        friends = []
+        for friend in self.friends_list:
+            if friend in self.friend_messages and self.friend_messages[friend][-1]['time'] > cutoff:
+                friends.append(friend)
+        return friends
