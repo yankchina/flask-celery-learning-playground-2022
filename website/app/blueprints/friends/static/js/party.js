@@ -8,9 +8,9 @@ function pullPartyMessages() {
     }
 }
 
-function sendPartyInvite(userId) {
+function sendPartyInvite(e, userId) {
+    e.stopPropagation();
     reqSendPartyInvite(userId);
-
 }
 
 function getPartyInviteHtml(userTag) {

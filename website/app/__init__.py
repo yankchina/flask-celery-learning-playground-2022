@@ -171,6 +171,9 @@ def create_app(config_class=Config):
     from app.blueprints.friends import bp as bp_friends
     app.register_blueprint(bp_friends)
 
+    from app.blueprints.notifications import bp as bp_notifications
+    app.register_blueprint(bp_notifications)
+
     socketio.init_app(app)
 
     return app

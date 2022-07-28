@@ -11,7 +11,7 @@ from slg_utilities.helpers import prnt
 
 
 class Party(me.Document):
-    leader = me.StringField(default='')
+    leader = me.StringField()
     max_size = me.IntField(default=8)
     datetime_created = me.DateTimeField(default=datetime.utcnow)
     datetime_disbanded = me.DateTimeField()
@@ -22,8 +22,9 @@ class Party(me.Document):
     })
     blacklist = me.ListField(default=[])
 
-    def __init__(self, leader_id):
-        self.leader = leader_id
+    def __init__(self, leader, *args, **kwargs):
+        super(Party, self).__init__(*args, **kwargs)
+        self.leader = leader
         self.save()
 
     @property
@@ -60,11 +61,37 @@ class Party(me.Document):
         return jsonify({'success': True, 'message': 'User removed from party successfully'})
 
     def add_message(self, user_id, message):
-        user = get_user_from_id(user_id)
-        tag = user.user_tag
-        self.messages.append({
-            'user_tag': tag,
-            'message': message,
-        })
-        self.save()
-        return jsonify({'success': True, 'message': 'Message added'})
+        try:
+            user = get_user_from_id(user_id)
+            tag = user.user_tag
+            message_dict = {
+                'user_tag': tag,
+                'message': message,
+            }
+            self.messages.append(message_dict)
+            self.save()
+            return message_dict
+        except:
+            return None
+
+    def __repr__(self):
+        member_string = '\n\t'.join(self.members)
+        return f'''
+Leader: {self.leader}
+ID: {self.id}
+Members:
+    {member_string}
+
+Message Count: {len(self.messages)}
+'''
+
+    def __str__(self):
+        member_string = '\n\t'.join(self.members)
+        return f'''
+Leader: {self.leader}
+ID: {self.id}
+Members:
+    {member_string}
+
+Message Count: {len(self.messages)}
+'''

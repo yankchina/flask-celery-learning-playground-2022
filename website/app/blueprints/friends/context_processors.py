@@ -53,3 +53,7 @@ def inject_recent_friends_contacted():
     friend_ids = current_user.get_recent_friends_contacted(num_days=7)
     user_tags = [get_user_from_id(friend_id).user_tag for friend_id in friend_ids]
     return dict(recent_friends_contacted=user_tags)
+
+@bp.app_context_processor
+def inject_friend_party_invites():
+    return dict(friend_party_invitations=current_user.party_invitations)

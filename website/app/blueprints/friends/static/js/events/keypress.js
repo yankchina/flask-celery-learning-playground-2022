@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById('send-party-message-input').addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === 'NumpadEnter') {
             // send message to party
+            reqSendPartyMessage(e.target.value);
 
             scrollPartyToBottom();
             clearInput(e.target);

@@ -11,7 +11,7 @@ from app.blueprints.matchmaking.tasks import find_match
 def join_matchmaking_route():
     joined_queue = current_user.join_queue()
     if not joined_queue:
-        return jsonify({'success': False, 'message': 'User failed to join queue'})
+        return jsonify({'success': False, 'message': 'Failed to join queue'})
     task = find_match.apply_async(args=[current_user.get_matchmaking_info()], priority=0)
     return jsonify({
         'success': True,

@@ -5,7 +5,7 @@ from flask import current_app, jsonify
 
 import mongoengine as me
 from app.blueprints.friends.cache_helpers import get_sid_from_user_id
-from app.blueprints.friends.sockets import emit_friend_message_to_sid, emit_party_invite_to_sid
+from app.blueprints.friends.sockets import emit_friend_message_to_sid, emit_party_invite_to_sid, emit_party_message_to_sid
 from app.helpers.models import get_user_from_id, get_user_from_tag
 from slg_utilities.helpers import prnt
 
@@ -14,13 +14,15 @@ from app.blueprints.friends.models import Party
 class PartyMixin:
 
     party_id = me.StringField(default='')
+    party_invitations = me.ListField()
 
     def __init__(self):
         pass
 
     def get_party(self):
         if self.party_id:
-            return Party.objects.get(id=self.party_id)
+            print(self.party_id, flush=True)
+            return Party.objects(id=self.party_id).first()
         else:
             return None
 
@@ -33,7 +35,7 @@ class PartyMixin:
             if user_id in party.members:
                 return jsonify({'success': False, 'message': 'User is already in party'})
 
-            if self.user_id != party.leader:
+            if str(self.id) != party.leader:
                 if party.settings.get('leader_invite_only'):
                     return jsonify({'success': False, 'message': 'Sending user not authorized to invite'})
 
@@ -46,6 +48,16 @@ class PartyMixin:
 
             # send invitation
             emit_party_invite_to_sid(self.user_tag, get_sid_from_user_id(user_id))
+
+            # add invitation to users party invitations
+            user.party_invitations.append({
+                'user_id': user_id,
+                'user_tag': user.user_tag,
+                'mmr': party.mmr,
+            })
+            self.save()
+
+            return jsonify({'success': True, 'message': 'Party invite sent successfully'})
 
         else:
             # create a new party and make ourselves the leader
@@ -60,10 +72,32 @@ class PartyMixin:
 
         inviting_user = get_user_from_id(inviting_user_id)
         party = inviting_user.get_party()
+        self.party_id = str(party.id)
+        self.save()
         return party.add_member(inviting_user, str(self.id))
 
+    def decline_party_invite(self, inviting_user_id):
+        self.party_invitations = [inv for inv in self.party_invitations if inv['user_id'] != inviting_user_id]
+        self.save()
+        return jsonify({'success': True, 'message': 'Party invite declined successfully'})
+
     def send_party_message(self, message):
-        pass
+        party = self.get_party()
+        if party:
+            message_dict = party.add_message(str(self.id), message)
+            if message_dict:
+                print(party, flush=True)
+                for member_id in party.members:
+                    sid = get_sid_from_user_id(member_id)
+                    print(sid, flush=True)
+                    emit_party_message_to_sid(message_dict, sid)
+
+                    # another option here is to have users join a specific room and emit to that room
+                    # that would be more efficient than sending to everyone but would require a bit of extra work
+                    # so I'm not doing that for now
+
+            return jsonify({'success': True, 'message': f'Successfully sent message to party'})
+        return jsonify({'success': False, 'message': 'You are not in a party.'}), 400
 
 class FriendsMixin:
     friends_list = me.ListField(default=[])

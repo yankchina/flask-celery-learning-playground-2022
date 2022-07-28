@@ -32,7 +32,7 @@
                 {% if 'tag' in friend %} {{ friend.user_tag }} {% else %} {{ friend.username }} {{ friend.user_type }} {% endif %}
             </span>
             <span style="float:right">
-                <button style="background: green;" onclick="sendPartyInvite('{{ friend.user_id }}'); event.stopPropagation();">+</button>
+                <button style="background: green;" onclick="sendPartyInvite(event, '{{ friend.user_id }}');">+</button>
                 <button onclick="reqRemoveFriend('{{ friend.user_id }}')">-</button>
             </span>
         </li>

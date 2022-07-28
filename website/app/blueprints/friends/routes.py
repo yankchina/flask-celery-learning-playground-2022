@@ -3,10 +3,11 @@ from flask_login import current_user
 from app.blueprints.friends import bp
 from app.helpers.models import get_user_from_id, get_user_from_tag
 from app.blueprints.friends.cache_helpers import get_sid_from_user_id
-from app.blueprints.friends.sockets import emit_friend_request_to_sid
+from app.blueprints.friends.sockets import emit_friend_request_to_sid, emit_party_message_to_sid
 from slg_utilities.helpers import prnt
 
 from app.blueprints.friends.test import TEST_PARTY_MESSAGES
+from app.blueprints.friends.notifications import emit_notification, emit_notification_json
 
 
 
@@ -102,18 +103,27 @@ def get_party_messages():
 
     return jsonify({'success': True, 'message': f'Successfully acquired friend messages', 'messages': messages})
 
+@bp.route('/send_party_message', methods=["POST"])
+def send_party_message():
+    message = request.form.get('message').strip()
+    return current_user.send_party_message(message)
+
 @bp.route('/send_party_invite', methods=["POST"])
 def send_party_invite():
+    print('sending party invite', flush=True)
+    prnt(request.form)
     current_user.send_party_invite(request.form.get('user_id'))
-    return jsonify({'success': True, 'message': f'Successfully acquired friend messages'})
+    return jsonify({'success': True, 'message': f'Successfully sent party invite'})
 
 @bp.route('/accept_party_invite', methods=["POST"])
 def accept_party_invite():
     inviting_user = get_user_from_tag(request.form.get('user_tag'))
-    current_user.accept_party_invite(str(inviting_user.id))
-    return jsonify({'success': True, 'message': f''})
+    accept_status = current_user.accept_party_invite(str(inviting_user.id))
+    emit_notification_json(accept_status, [get_sid_from_user_id(str(current_user.id)), get_sid_from_user_id(str(inviting_user.id))])
+    return jsonify({'success': True, 'message': f'Successfully accepted party invite'})
+
 
 @bp.route('/decline_party_invite', methods=["POST"])
 def decline_party_invite():
     current_user.decline_party_invite(request.form.get('user_tag'))
-    return jsonify({'success': True, 'message': f'Successfully acquired friend messages'})
+    return jsonify({'success': True, 'message': f'Successfully declined party invite'})

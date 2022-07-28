@@ -28,6 +28,10 @@ function addMessageToFriendMessages(message, type="self") {
         (type == "self") ? htmlToElement(getSelfMessageHtml(message)) : htmlToElement(getFriendMessageHtml(message))
     )
 }
+function addMessageToPartyMessages(messageDict) {
+    let elem = document.getElementById('friends-party-user-messages');
+    elem.appendChild(htmlToElement(getFriendPartyMessageHtml(messageDict)));
+}
 
 function addUserTagToMessages(userTag) {
     let list = document.getElementById('friends-messages-friends-friends');

@@ -58,14 +58,25 @@ async function reqGetFriendPartyMessages() {
     return messages;
 }
 
-async function reqSendPartyInvite(userId) {
+// async function reqSendPartyInvite(userId) {
+//     let formData = new FormData();
+//     formData.append('user_id', userId);
+//     const res = await fetch('/friends/send_party_invite', {
+//         method: "POST",
+//         body: formData
+//     })
+//     const result = await res.json();
+//     console.log(result);
+// }
+
+function reqSendPartyInvite(userId) {
     let formData = new FormData();
     formData.append('user_id', userId);
-    const res = await fetch('/friends/send_party_invite', {
+    const res = fetch('/friends/send_party_invite', {
         method: "POST",
         body: formData
     })
-    const result = await res.json();
+    const result = res.json();
     console.log(result);
 }
 
@@ -89,4 +100,16 @@ async function reqAcceptPartyInvite(userTag) {
     })
     const result = await res.json();
     console.log(result);
+}
+
+function reqSendPartyMessage(message) {
+    let formData = new FormData();
+    formData.append('message', message);
+    fetch('/friends/send_party_message', {
+        method: "POST",
+        body: formData
+    })
+    .then(res => res.json())
+    .then(json => console.log(json))
+    .catch(error => console.warn(error));
 }

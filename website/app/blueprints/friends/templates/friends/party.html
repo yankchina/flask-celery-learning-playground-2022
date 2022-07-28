@@ -2,31 +2,17 @@
 {% macro html() %}
 
 <div id="friends-party-invite-container">
-    {% for inv in friend_party_invites %}
+    {% for inv in friend_party_invitations %}
     <div class="friends-party-invite">
         <h6>Party Invite</h6>
-        <h4>Doodler#83jm</h4>
+        <h4>{{ inv['user_tag'] }}</h4>
+        <h6>Party Rating: {{ inv['mmr'] }}</h6>
         <div>
-            <button onclick="acceptPartyInvite('Doodler#83jm')">Accept</button>
-            <button onclick="declinePartyInvite('Doodler#83jm')">Decline</button>
+            <button onclick="acceptPartyInvite('{{ inv["user_tag"] }}')">Accept</button>
+            <button onclick="declinePartyInvite('{{ inv["user_tag"] }}')">Decline</button>
         </div>
     </div>
-    <div class="friends-party-invite">
-        <h6>Party Invite</h6>
-        <h4>Doodler#83jm</h4>
-        <div>
-            <button onclick="acceptPartyInvite('Doodler#83jm')">Accept</button>
-            <button onclick="declinePartyInvite('Doodler#83jm')">Decline</button>
-        </div>
-    </div>
-    <div class="friends-party-invite">
-        <h6>Party Invite</h6>
-        <h4>Doodler#83jm</h4>
-        <div>
-            <button onclick="acceptPartyInvite('Doodler#83jm')">Accept</button>
-            <button onclick="declinePartyInvite('Doodler#83jm')">Decline</button>
-        </div>
-    </div>
+    {% endfor %}
 </div>
 
 <button id="friends-party-btn">
@@ -57,5 +43,13 @@
 </div>
 
 <link href="{{ url_for('friends.static', filename='css/party.css') }}" rel="stylesheet" />
+
+{% if current_user.party_id %}
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        socket.join({{ current_user.party_id }})
+    });
+</script>
+{% endif %}
 
 {% endmacro %}
