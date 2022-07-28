@@ -25,6 +25,12 @@ class Party(me.Document):
     def __init__(self, leader, *args, **kwargs):
         super(Party, self).__init__(*args, **kwargs)
         self.leader = leader
+        user = get_user_from_id(leader)
+        self.members.append({
+            'user_id': leader,
+            'user_tag': user.user_tag,
+            'mmr': user.mmr,
+        })
         self.save()
 
     @property
@@ -32,16 +38,21 @@ class Party(me.Document):
         return len(self.members)
 
     @property
+    def sid(self):
+        # can change in the future but we will always use sid as the accessor
+        return str(self.id)
+
+    @property
     def mmr(self):
         ''' Get this party's grouped mmr '''
         pass
 
     def add_member(self, sending_user, user_id):
-        if sending_user != self.leader and self.settings.get('leader_invite_only'):
-            return jsonify({'success': False, 'message': 'Sending user not authorized to invite'})
+        if str(sending_user.id) != self.leader and self.settings.get('leader_invite_only'):
+            return {'success': False, 'message': 'Sending user not authorized to invite'}
         user = get_user_from_id(user_id)
         if not user:
-            return jsonify({'success': False, 'message': 'No user found with that ID'})
+            return {'success': False, 'message': 'No user found with that ID'}
         user_tag = user.user_tag
         self.members.append({
             'user_id': user_id,
@@ -49,7 +60,7 @@ class Party(me.Document):
             'mmr': user.mmr,
         })
         self.save()
-        return jsonify({'success': True, 'message': 'User added to party successfully'})
+        return {'success': True, 'message': f'{user.user_tag} added to party.'}
 
     def remove_member(self, user_id):
         self.members = [mem for mem in self.members if mem['user_id'] != user_id]
@@ -58,7 +69,7 @@ class Party(me.Document):
         if self.leader == user_id:
             self.leader = self.members[0]['user_id']
         self.save()
-        return jsonify({'success': True, 'message': 'User removed from party successfully'})
+        return {'success': True, 'message': 'User removed from party successfully'}
 
     def add_message(self, user_id, message):
         try:

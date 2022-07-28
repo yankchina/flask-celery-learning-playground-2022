@@ -31,6 +31,11 @@
 
         <div id="friends-party-friends-friends">
         </div>
+        {% if current_user.get_party() %}
+        <button id="leave-party-btn" onclick="reqLeaveParty()">Leave Party</button>
+        {% else %}
+
+        {% endif %}
     </div>
     <div id="friends-party-messages">
         <div id="friends-party-user-messages" class="">
@@ -47,7 +52,14 @@
 {% if current_user.party_id %}
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        socket.join({{ current_user.party_id }})
+        console.log( socket );
+        if ('{{current_user.party_id}}') {
+            socket.emit('join_party_room', {'room': '{{ current_user.party_id }}'})
+        };
+
+        socket.on('connection', data => {
+            console.log( data );
+        });
     });
 </script>
 {% endif %}

@@ -89,6 +89,13 @@ def create_app(config_class=Config):
         output='dist/friends-js.js')
     assets.register('friends-js', friends_js)
     friends_js.build(force=True)
+    notifications_js = Bundle(
+        'blueprints/notifications/static/js/**/*.js',
+        'blueprints/notifications/static/js/*.js',
+        filters='jsmin',
+        output='dist/notifications-js.js')
+    assets.register('notifications-js', notifications_js)
+    notifications_js.build(force=True)
     # friends_scss = Bundle(
     #     'blueprints/friends/static/scss/**/*.scss',
     #     'blueprints/friends/static/scss/*.scss',
@@ -173,6 +180,9 @@ def create_app(config_class=Config):
 
     from app.blueprints.notifications import bp as bp_notifications
     app.register_blueprint(bp_notifications)
+
+    from app.blueprints.sockets import bp as bp_sockets
+    app.register_blueprint(bp_sockets)
 
     socketio.init_app(app)
 

@@ -110,20 +110,27 @@ def send_party_message():
 
 @bp.route('/send_party_invite', methods=["POST"])
 def send_party_invite():
-    print('sending party invite', flush=True)
-    prnt(request.form)
-    current_user.send_party_invite(request.form.get('user_id'))
-    return jsonify({'success': True, 'message': f'Successfully sent party invite'})
+    invitation_status = current_user.send_party_invite(request.form.get('user_id'))
+    print(invitation_status, flush=True)
+    return jsonify(invitation_status)
 
 @bp.route('/accept_party_invite', methods=["POST"])
 def accept_party_invite():
     inviting_user = get_user_from_tag(request.form.get('user_tag'))
     accept_status = current_user.accept_party_invite(str(inviting_user.id))
+    party = current_user.get_party()
     emit_notification_json(accept_status, [get_sid_from_user_id(str(current_user.id)), get_sid_from_user_id(str(inviting_user.id))])
-    return jsonify({'success': True, 'message': f'Successfully accepted party invite'})
-
+    emit_party_message_to_sid(f'{current_user.user_tag} has joined the party.', party.sid)
+    return jsonify(accept_status)
 
 @bp.route('/decline_party_invite', methods=["POST"])
 def decline_party_invite():
     current_user.decline_party_invite(request.form.get('user_tag'))
     return jsonify({'success': True, 'message': f'Successfully declined party invite'})
+
+@bp.route('/leave_party', methods=["POST"])
+def leave_party():
+    try:
+        return jsonify(current_user.leave_party())
+    except:
+        return jsonify({'success': False, 'message': f'Failed to leave party for unknown reason'})

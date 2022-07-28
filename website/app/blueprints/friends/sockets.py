@@ -17,7 +17,8 @@ def emit_party_invite_to_sid(user_tag, sid):
     prnt(user_tag)
     if sid:
         socketio.emit('party_invite', {'user_tag': user_tag}, room=sid)
-    # else we just dont emit it but we append it to the users party invitations
+    # else we just dont emit it but we append it to the users party invitations; which is handled elsewhere
+
 
 def emit_party_message_to_sid(message_dict, sid):
     socketio.emit('party_message', {'message_dict': message_dict}, room=sid)

@@ -28,23 +28,25 @@ class PartyMixin:
 
     def send_party_invite(self, user_id):
         # check if we are currently in party
-        if self.party_id:
-            party = self.get_party()
+        user = get_user_from_id(user_id)
+        if not user:
+            return {'success': False, 'message': 'No user found with that ID'}
+
+        party = self.get_party()
+        if party:
 
             # check if user is in party
-            if user_id in party.members:
-                return jsonify({'success': False, 'message': 'User is already in party'})
+            for member in party.members:
+                if user_id == member['user_id']:
+                    return {'success': False, 'message': 'User is already in party'}
 
             if str(self.id) != party.leader:
                 if party.settings.get('leader_invite_only'):
-                    return jsonify({'success': False, 'message': 'Sending user not authorized to invite'})
+                    return {'success': False, 'message': 'Sending user not authorized to invite'}
 
             if party.size >= party.max_size:
-                return jsonify({'success': False, 'message': 'Party is full'})
+                return {'success': False, 'message': 'Party is full'}
 
-            user = get_user_from_id(user_id)
-            if not user:
-                return jsonify({'success': False, 'message': 'No user found with that ID'})
 
             # send invitation
             emit_party_invite_to_sid(self.user_tag, get_sid_from_user_id(user_id))
@@ -57,19 +59,16 @@ class PartyMixin:
             })
             self.save()
 
-            return jsonify({'success': True, 'message': 'Party invite sent successfully'})
+            return {'success': True, 'message': 'Party invite sent successfully', 'party_sid': party.sid}
 
         else:
             # create a new party and make ourselves the leader
             party = Party(str(self.id))
             self.party_id = str(party.id)
             self.save()
-            self.send_party_invite(user_id)
+            return self.send_party_invite(user_id)
 
     def accept_party_invite(self, inviting_user_id):
-        if self.party_id:
-            return jsonify({'success': False, 'message': 'User is already in party'})
-
         inviting_user = get_user_from_id(inviting_user_id)
         party = inviting_user.get_party()
         self.party_id = str(party.id)
@@ -98,6 +97,13 @@ class PartyMixin:
 
             return jsonify({'success': True, 'message': f'Successfully sent message to party'})
         return jsonify({'success': False, 'message': 'You are not in a party.'}), 400
+
+    def leave_party(self):
+        # get party
+        party = self.get_party()
+        self.party_id = ''
+        self.save()
+        return party.remove_member(str(self.id))
 
 class FriendsMixin:
     friends_list = me.ListField(default=[])

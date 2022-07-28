@@ -1,4 +1,5 @@
 from flask_login import login_required, current_user
+from flask_socketio import join_room, leave_room, send
 from flask import jsonify, url_for, render_template, request, current_app
 from app import socketio
 from app.blueprints.sockets import bp
@@ -9,3 +10,16 @@ from app.blueprints.sockets import bp
 def emit_notification(data):
     socketio.emit('notification', { 'message': data.get('message') }, room=data.get('sid'))
     # socket_ids
+
+@socketio.on('join_party_room')
+def on_join(data):
+    print(data, flush=True)
+    room = data['room']
+    join_room(room)
+    send('Joined room.', to=room)
+
+@socketio.on('leave_party_room')
+def on_leave(data):
+    room = data['room']
+    leave_room(room)
+    send('Left room.', to=room)

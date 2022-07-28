@@ -11,4 +11,4 @@ def emit_notification_json(notification, sid):
     if isinstance(sid, list):
         sid = [sid]
     for sid in sid:
-        socketio.emit('notification_json', { 'notification': notification }, room=sid)
+        socketio.emit('notification_json', { 'notification_json': notification }, room=sid)

@@ -69,15 +69,21 @@ async function reqGetFriendPartyMessages() {
 //     console.log(result);
 // }
 
-function reqSendPartyInvite(userId) {
+async function reqSendPartyInvite(userId) {
     let formData = new FormData();
     formData.append('user_id', userId);
-    const res = fetch('/friends/send_party_invite', {
+    const res = await fetch('/friends/send_party_invite', {
         method: "POST",
         body: formData
     })
-    const result = res.json();
+    const result = await res.json();
     console.log(result);
+    try {
+        console.log( socket );
+        if (result.success) {
+            socket.emit('join_party_room', {'room': result.party_sid});
+        }
+    } catch (error) {}
 }
 
 async function reqDeclinePartyInvite(userTag) {
@@ -97,9 +103,15 @@ async function reqAcceptPartyInvite(userTag) {
     const res = await fetch('/friends/accept_party_invite', {
         method: "POST",
         body: formData
-    })
+    });
     const result = await res.json();
     console.log(result);
+    try {
+        console.log( socket );
+        // socket.join(result.party_sid);
+        socket.emit('join_party_room', {'room': result.party_sid})
+        console.log("joined party socket room");
+    } catch (error) {}
 }
 
 function reqSendPartyMessage(message) {
@@ -112,4 +124,15 @@ function reqSendPartyMessage(message) {
     .then(res => res.json())
     .then(json => console.log(json))
     .catch(error => console.warn(error));
+}
+
+async function reqLeaveParty() {
+    const res = await fetch('/friends/leave_party', {
+        method: "POST",
+    });
+    const result = await res.json();
+    console.log(result);
+    addNotification(result, 3000);
+    try {
+    } catch (error) {}
 }
