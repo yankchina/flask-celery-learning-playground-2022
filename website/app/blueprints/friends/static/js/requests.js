@@ -48,14 +48,16 @@ function reqSendMessageToFriend(message, userTag) {
     .catch(error => console.warn(error));
 }
 
-async function reqGetFriendPartyMessages() {
-    const res = await fetch('/friends/get_party_messages', {
+async function reqGetFriendPartyDetails() {
+    const res = await fetch('/friends/get_party_details', {
         method: "GET",
     })
     const result = await res.json();
-    console.log(result);
     const messages = await result.messages;
-    return messages;
+    const members = await result.members;
+    const leader_id = await result.leader_id;
+    const is_leader = await result.is_leader;
+    return [members, messages, leader_id, is_leader];
 }
 
 // async function reqSendPartyInvite(userId) {
@@ -77,9 +79,7 @@ async function reqSendPartyInvite(userId) {
         body: formData
     })
     const result = await res.json();
-    console.log(result);
     try {
-        console.log( socket );
         if (result.success) {
             socket.emit('join_party_room', {'room': result.party_sid});
         }
@@ -94,7 +94,6 @@ async function reqDeclinePartyInvite(userTag) {
         body: formData
     })
     const result = await res.json();
-    console.log(result);
 }
 
 async function reqAcceptPartyInvite(userTag) {
@@ -105,10 +104,7 @@ async function reqAcceptPartyInvite(userTag) {
         body: formData
     });
     const result = await res.json();
-    console.log(result);
     try {
-        console.log( socket );
-        // socket.join(result.party_sid);
         socket.emit('join_party_room', {'room': result.party_sid})
         console.log("joined party socket room");
     } catch (error) {}
@@ -131,7 +127,6 @@ async function reqLeaveParty() {
         method: "POST",
     });
     const result = await res.json();
-    console.log(result);
     addNotification(result, 3000);
     try {
     } catch (error) {}

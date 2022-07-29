@@ -22,16 +22,18 @@ class Party(me.Document):
     })
     blacklist = me.ListField(default=[])
 
-    def __init__(self, leader, *args, **kwargs):
-        super(Party, self).__init__(*args, **kwargs)
-        self.leader = leader
-        user = get_user_from_id(leader)
-        self.members.append({
-            'user_id': leader,
+    @classmethod
+    def init_with_leader_id(cls, leader_id):
+        party = cls()
+        party.leader = leader_id
+        user = get_user_from_id(leader_id)
+        party.members.append({
+            'user_id': leader_id,
             'user_tag': user.user_tag,
             'mmr': user.mmr,
         })
-        self.save()
+        party.save()
+        return party
 
     @property
     def size(self):
@@ -86,7 +88,7 @@ class Party(me.Document):
             return None
 
     def __repr__(self):
-        member_string = '\n\t'.join(self.members)
+        member_string = '\n\t'.join([mem['user_tag'] for mem in self.members])
         return f'''
 Leader: {self.leader}
 ID: {self.id}
@@ -97,7 +99,7 @@ Message Count: {len(self.messages)}
 '''
 
     def __str__(self):
-        member_string = '\n\t'.join(self.members)
+        member_string = '\n\t'.join([mem['user_tag'] for mem in self.members])
         return f'''
 Leader: {self.leader}
 ID: {self.id}

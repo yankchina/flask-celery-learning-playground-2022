@@ -4,7 +4,7 @@ let hasPulledPartyMessages = false;
 function pullPartyMessages() {
     if (!hasPulledPartyMessages) {
         hasPulledPartyMessages = true;
-        reqGetFriendPartyMessages();
+        reqGetFriendPartyDetails();
     }
 }
 

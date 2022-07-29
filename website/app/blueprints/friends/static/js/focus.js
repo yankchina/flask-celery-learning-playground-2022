@@ -19,12 +19,12 @@ async function focusUserTag(userTag) {
 }
 
 async function focusParty() {
-    let list = document.getElementById('friends-party-friends-friends');
-    let messages = await reqGetFriendPartyMessages();
+    let [members, messages, leader_id, is_leader] = await reqGetFriendPartyDetails();
     if (messages === "not in party") {
         setNotInPartyInPartyDiv();
         return;
     }
+    setMembersInFriendPartyDiv(members, leader_id, is_leader);
     setMessagesInFriendPartyDiv(messages);
     scrollPartyToBottom('auto');
 }

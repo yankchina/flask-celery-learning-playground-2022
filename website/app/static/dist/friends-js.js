@@ -12,6 +12,7 @@ function clearInput(elem){elem.value='';}
 function moveChildToFirstChild(child,parent){parent.removeChild(child);parent.insertBefore(child,parent.firstChild);}
 function setMessagesInFriendMessagesDiv(messages){let elem=document.getElementById('friends-messages-user-messages')
 elem.innerHTML='';elem.appendChild(htmlToElement(getFriendMessagesHtml(messages)));}
+function setMembersInFriendPartyDiv(members,leader_id,is_leader){let elem=document.getElementById('friends-party-friends-members');elem.innerHTML='';elem.appendChild(htmlToElement(getFriendPartyMembersHtml(members,leader_id,is_leader)));}
 function setMessagesInFriendPartyDiv(messages){let elem=document.getElementById('friends-party-user-messages');elem.innerHTML='';elem.appendChild(htmlToElement(getFriendPartyMessagesHtml(messages)));}
 function setNotInPartyInPartyDiv(){let elem=document.getElementById('friends-party-user-messages');elem.innerHTML='Not in party.';}
 function addMessageToFriendMessages(message,type="self"){document.querySelector('#friends-messages-user-messages > div').appendChild((type=="self")?htmlToElement(getSelfMessageHtml(message)):htmlToElement(getFriendMessageHtml(message)))}
@@ -21,11 +22,10 @@ function getElemFromUserTag(userTag){return document.querySelector(`[data-user-t
 async function focusUserTag(userTag){let userTagElem=getElemFromUserTag(userTag);if(!userTagElem){userTagElem=addUserTagToMessages(userTag)
 initializeUserTagElem(userTagElem);}
 let list=document.getElementById('friends-messages-friends-friends');let messages=await reqGetFriendMessages(userTag);setMessagesInFriendMessagesDiv(messages);moveChildToFirstChild(userTagElem,list);removeActiveFromMessageUserTags();addActiveToMessageUserTag(userTagElem);friendUserTagSelected=userTag;scrollMessagesToBottom('auto');}
-async function focusParty(){let list=document.getElementById('friends-party-friends-friends');let messages=await reqGetFriendPartyMessages();if(messages==="not in party"){setNotInPartyInPartyDiv();return;}
-setMessagesInFriendPartyDiv(messages);scrollPartyToBottom('auto');}
+async function focusParty(){let list=document.getElementById('friends-party-friends-members');let[members,messages,leader_id,is_leader]=await reqGetFriendPartyDetails();if(messages==="not in party"){setNotInPartyInPartyDiv();return;}
+setMembersInFriendPartyDiv(members,leader_id,is_leader);setMessagesInFriendPartyDiv(messages);scrollPartyToBottom('auto');}
 function getFocusedFriendTagMessages(){return document.querySelector(`[data-user-tag].active`).dataset.userTag;}
-let friendUserTagSelected;function initializeUserTagElem(userTagElem){userTagElem.addEventListener('click',(e)=>{clickUserTagInMessages(e)});}
-function getFriendMessageHtml(message){return`<div class="friends-messages-friend-message">${message}</div>`}
+let friendUserTagSelected;function getFriendMessageHtml(message){return`<div class="friends-messages-friend-message">${message}</div>`}
 function getSelfMessageHtml(message){return`<div class="friends-messages-self-message">${message}</div>`}
 function getFriendMessagesHtml(messages){let html='<div>';for(let msg of messages){html+=(msg.who=='self')?getSelfMessageHtml(msg.message):getFriendMessageHtml(msg.message);}
 html+='</div>'
@@ -34,13 +34,20 @@ function getFriendPartyMessageHtml(msg){return`<div class="friends-party-message
 function getFriendPartyMessagesHtml(messages){let html='<div>';for(let msg of messages){html+=getFriendPartyMessageHtml(msg);}
 html+='</div>'
 return html;}
+function getFriendPartyLeaderHtml(member){return`<div class="friends-party-member"><span class="crown">*</span>${member.user_tag}</div>`}
+function getFriendPartyMemberHtml(member,is_leader=false){return`<div class="friends-party-member">${member.user_tag}${is_leader?'<span class="promotion">^</span><span class="kick">X</span>':''}</div>`}
+function getFriendPartyMembersHtml(members,leader_id,is_leader){let html='<div>';for(let m of members){if(m.user_id===leader_id){html+=getFriendPartyLeaderHtml(m);break;}}
+for(let m of members){if(m.user_id!==leader_id){html+=getFriendPartyMemberHtml(m,is_leader);}}
+html+='</div>'
+return html;}
+function initializeUserTagElem(userTagElem){userTagElem.addEventListener('click',(e)=>{clickUserTagInMessages(e)});}
 function showFriendsNotification(type="",increment=true){let notifDiv=document.getElementById(`friends-${type}-notification-div`);if(increment){notifDiv.innerText=parseInt(notifDiv.innerText)+1;}
 notifDiv.style.display="flex";}
 function resetFriendsNotification(type=""){let notifDiv=document.getElementById(`friends-${type}-notification-div`);notifDiv.innerText=0;notifDiv.style.display="none";}
 function showUserTagNotification(userTag,increment=true){console.log('adding');let notifDiv=document.querySelector(`[data-user-tag="${userTag}"]>.friends-user-tag-notification-div`);if(increment){notifDiv.innerText=parseInt(notifDiv.innerText)+1;}
 notifDiv.style.display="flex";}
 function resetUserTagNotification(userTagElem){let notifDiv=userTagElem.querySelector('span');notifDiv.innerText=0;notifDiv.style.display="none";}
-let hasPulledPartyMessages=false;function pullPartyMessages(){if(!hasPulledPartyMessages){hasPulledPartyMessages=true;reqGetFriendPartyMessages();}}
+let hasPulledPartyMessages=false;function pullPartyMessages(){if(!hasPulledPartyMessages){hasPulledPartyMessages=true;reqGetFriendPartyDetails();}}
 function sendPartyInvite(e,userId){e.stopPropagation();reqSendPartyInvite(userId);}
 function getPartyInviteHtml(userTag){let htmlString=`<div class="friends-party-invite"data-party-invite-user-tag=${userTag}><h6>Party Invite</h6><h4>${userTag}</h4><div><button onclick="acceptPartyInvite('${userTag}')">Accept</button><button onclick="declinePartyInvite('${userTag}')">Decline</button></div></div>`.replace(/>\s+</g,"><");return htmlToElement(htmlString);}
 function removePartyInvite(userTag){document.querySelector(`[data-party-invite-user-tag="${userTag}"]`).remove();}
@@ -51,16 +58,16 @@ function reqRemoveFriend(user_id){let formData=new FormData();formData.append('u
 async function reqGetFriendMessages(userTag){let formData=new FormData();formData.append('user_tag',userTag);const res=await fetch('/friends/get_friend_messages',{method:"POST",body:formData})
 const result=await res.json();const messages=await result.messages;return messages;}
 function reqSendMessageToFriend(message,userTag){let formData=new FormData();formData.append('user_tag',userTag);formData.append('message',message);fetch('/friends/send_friend_message',{method:"POST",body:formData}).then(res=>res.json()).then(json=>console.log(json)).catch(error=>console.warn(error));}
-async function reqGetFriendPartyMessages(){const res=await fetch('/friends/get_party_messages',{method:"GET",})
-const result=await res.json();console.log(result);const messages=await result.messages;return messages;}
+async function reqGetFriendPartyDetails(){const res=await fetch('/friends/get_party_details',{method:"GET",})
+const result=await res.json();const messages=await result.messages;const members=await result.members;const leader_id=await result.leader_id;const is_leader=await result.is_leader;return[members,messages,leader_id,is_leader];}
 async function reqSendPartyInvite(userId){let formData=new FormData();formData.append('user_id',userId);const res=await fetch('/friends/send_party_invite',{method:"POST",body:formData})
-const result=await res.json();console.log(result);try{console.log(socket);if(result.success){socket.emit('join_party_room',{'room':result.party_sid});}}catch(error){}}
+const result=await res.json();try{if(result.success){socket.emit('join_party_room',{'room':result.party_sid});}}catch(error){}}
 async function reqDeclinePartyInvite(userTag){let formData=new FormData();formData.append('user_tag',userTag);const res=await fetch('/friends/decline_party_invite',{method:"POST",body:formData})
-const result=await res.json();console.log(result);}
-async function reqAcceptPartyInvite(userTag){let formData=new FormData();formData.append('user_tag',userTag);const res=await fetch('/friends/accept_party_invite',{method:"POST",body:formData});const result=await res.json();console.log(result);try{console.log(socket);socket.emit('join_party_room',{'room':result.party_sid})
+const result=await res.json();}
+async function reqAcceptPartyInvite(userTag){let formData=new FormData();formData.append('user_tag',userTag);const res=await fetch('/friends/accept_party_invite',{method:"POST",body:formData});const result=await res.json();try{socket.emit('join_party_room',{'room':result.party_sid})
 console.log("joined party socket room");}catch(error){}}
 function reqSendPartyMessage(message){let formData=new FormData();formData.append('message',message);fetch('/friends/send_party_message',{method:"POST",body:formData}).then(res=>res.json()).then(json=>console.log(json)).catch(error=>console.warn(error));}
-async function reqLeaveParty(){const res=await fetch('/friends/leave_party',{method:"POST",});const result=await res.json();console.log(result);addNotification(result,3000);try{}catch(error){}}
+async function reqLeaveParty(){const res=await fetch('/friends/leave_party',{method:"POST",});const result=await res.json();addNotification(result,3000);try{}catch(error){}}
 function scrollMessagesToBottom(behavior='smooth'){document.querySelector('#friends-messages-user-messages').scrollTo({top:999999,left:100,behavior:behavior});}
 function scrollPartyToBottom(behavior='smooth'){document.querySelector('#friends-party-user-messages').scrollTo({top:999999,left:100,behavior:behavior});}
 let friendsListOpen=false;let messagesListOpen=false;let partyListOpen=false;function toggleFriendsList(){(friendsListOpen)?closeFriendsList():openFriendsList();}

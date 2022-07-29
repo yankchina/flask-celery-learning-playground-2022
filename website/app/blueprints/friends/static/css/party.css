@@ -122,15 +122,15 @@
     background: red;
     padding: 0.5rem;
 }
-#friends-party-friends-friends {
+#friends-party-friends-members {
     overflow:hidden;
 }
-#friends-party-friends-friends div {
+#friends-party-friends-members div {
     position: relative;
     padding: 0.25rem;
     padding-left: 0;
 }
-#friends-party-friends-friends div.active {
+#friends-party-friends-members div.active {
     background:white;
     color:black;
 }

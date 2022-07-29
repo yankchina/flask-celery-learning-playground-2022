@@ -90,18 +90,22 @@ def get_friend_messages():
 
     return jsonify({'success': True, 'message': f'Successfully acquired friend messages', 'messages': messages})
 
-@bp.route('/get_party_messages', methods=["GET"])
-def get_party_messages():
-    print('getting messages', flush=True)
+@bp.route('/get_party_details', methods=["GET"])
+def get_party_details():
     party = current_user.get_party()
-    print(party)
     if party:
         messages = party.messages
+        members = party.members
+        leader_id = party.leader
+        is_leader = current_user.is_party_leader()
     else:
         # messages = TEST_PARTY_MESSAGES
+        members = []
         messages = "not in party"
+        leader_id = ''
+        is_leader = False
 
-    return jsonify({'success': True, 'message': f'Successfully acquired friend messages', 'messages': messages})
+    return jsonify({'success': True, 'message': f'Successfully acquired friend messages', 'messages': messages, 'members': members, 'leader_id': leader_id, 'is_leader': is_leader})
 
 @bp.route('/send_party_message', methods=["POST"])
 def send_party_message():

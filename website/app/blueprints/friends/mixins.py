@@ -19,6 +19,10 @@ class PartyMixin:
     def __init__(self):
         pass
 
+    def is_party_leader(self):
+        party = self.get_party()
+        return str(self.id) == party.leader
+
     def get_party(self):
         if self.party_id:
             print(self.party_id, flush=True)
@@ -63,7 +67,7 @@ class PartyMixin:
 
         else:
             # create a new party and make ourselves the leader
-            party = Party(str(self.id))
+            party = Party.init_with_leader_id(str(self.id))
             self.party_id = str(party.id)
             self.save()
             return self.send_party_invite(user_id)

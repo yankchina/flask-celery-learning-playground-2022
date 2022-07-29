@@ -12,6 +12,11 @@ function setMessagesInFriendMessagesDiv(messages) {
     elem.innerHTML = '';
     elem.appendChild(htmlToElement(getFriendMessagesHtml(messages)));
 }
+function setMembersInFriendPartyDiv(members, leader_id, is_leader) {
+    let elem = document.getElementById('friends-party-friends-members');
+    elem.innerHTML = '';
+    elem.appendChild(htmlToElement(getFriendPartyMembersHtml(members, leader_id, is_leader)));
+}
 function setMessagesInFriendPartyDiv(messages) {
     let elem = document.getElementById('friends-party-user-messages');
     elem.innerHTML = '';
