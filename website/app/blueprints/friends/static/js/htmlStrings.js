@@ -15,6 +15,9 @@ function getFriendMessagesHtml(messages) {
     return html;
 }
 
+function getLeftPartyMessageHtml(userTag) {
+    return `<div class="friends-party-message">${userTag} left the party.</div>`
+}
 function getFriendPartyMessageHtml(msg) {
     return `<div class="friends-party-message">${msg.user_tag}:&ensp;${msg.message}</div>`
 }

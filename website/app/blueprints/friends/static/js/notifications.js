@@ -6,6 +6,7 @@
 // requests
 // blocked
 // recent
+// party
 
 function showFriendsNotification(type="", increment=true) {
     let notifDiv = document.getElementById(`friends-${type}-notification-div`);

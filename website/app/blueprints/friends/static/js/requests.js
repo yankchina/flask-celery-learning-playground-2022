@@ -80,9 +80,10 @@ async function reqSendPartyInvite(userId) {
     })
     const result = await res.json();
     try {
-        if (result.success) {
-            socket.emit('join_party_room', {'room': result.party_sid});
-        }
+        addNotification(result, 3000);
+        // if (result.success) {
+        //     socket.emit('join_party_room', {'room': result.party_sid});
+        // }
     } catch (error) {}
 }
 
@@ -104,10 +105,6 @@ async function reqAcceptPartyInvite(userTag) {
         body: formData
     });
     const result = await res.json();
-    try {
-        socket.emit('join_party_room', {'room': result.party_sid})
-        console.log("joined party socket room");
-    } catch (error) {}
 }
 
 function reqSendPartyMessage(message) {
@@ -118,7 +115,6 @@ function reqSendPartyMessage(message) {
         body: formData
     })
     .then(res => res.json())
-    .then(json => console.log(json))
     .catch(error => console.warn(error));
 }
 

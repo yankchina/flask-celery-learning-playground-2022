@@ -1,10 +1,10 @@
 let friendsListOpen = false;
 let messagesListOpen = false;
-let partyListOpen = false;
+let partyTabOpen = false;
 
 function toggleFriendsList() { (friendsListOpen) ? closeFriendsList() : openFriendsList(); }
 function toggleMessagesList() { (messagesListOpen) ? closeMessagesList() : openMessagesList(); }
-function togglePartyList() { (partyListOpen) ? closePartyList() : openPartyList(); }
+function togglePartyList() { (partyTabOpen) ? closePartyList() : openPartyList(); }
 
 function openFriendsList() {
     document.getElementById('friends-list').style.display = 'flex';
@@ -26,12 +26,12 @@ function closeMessagesList() {
 function openPartyList() {
     document.getElementById('friends-party-list').style.display = 'flex';
     focusParty();
-    partyListOpen = true;
+    partyTabOpen = true;
     scrollPartyToBottom();
 }
 function closePartyList() {
     document.getElementById('friends-party-list').style.display = 'none';
-    partyListOpen = false;
+    partyTabOpen = false;
 }
 function showFriendsListVariation(variation) {
     hideAllFriendLists();

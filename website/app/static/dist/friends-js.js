@@ -5,7 +5,8 @@ document.addEventListener("DOMContentLoaded",function(){document.getElementById(
 document.getElementById('friends-list-requests').appendChild(elem)
 elem.querySelector('span > button').addEventListener('click',()=>{reqAddFriend(data.user_id)});showFriendsNotification('general');showFriendsNotification('requests');});});document.addEventListener("DOMContentLoaded",function(){socket.on('friend_message',(data)=>{console.log(data);let userTag=data.user_tag
 let msg=data.message;if(!getElemFromUserTag(userTag)){addUserTagToMessages(data.user_tag);}
-if(messagesListOpen){let focusedFriendTag=getFocusedFriendTagMessages();if(focusedFriendTag!=userTag){showUserTagNotification(userTag);}else{addMessageToFriendMessages(msg,"friend");scrollMessagesToBottom();}}else{showFriendsNotification('messages');showUserTagNotification(userTag);let focusedFriendTag=getFocusedFriendTagMessages();if(focusedFriendTag!=userTag){showUserTagNotification(userTag);}else{addMessageToFriendMessages(msg,"friend");}}});});document.addEventListener("DOMContentLoaded",function(){socket.on('party_invite',(data)=>{document.getElementById('friends-party-invite-container').appendChild(getPartyInviteHtml(data.user_tag));});socket.on('party_message',(data)=>{console.log(data);addMessageToPartyMessages(data.message_dict);});});function setMessagesUserTagActive(userTag){userTagElem=getElemFromUserTag(userTag).classList.add('active');}
+if(messagesListOpen){let focusedFriendTag=getFocusedFriendTagMessages();if(focusedFriendTag!=userTag){showUserTagNotification(userTag);}else{addMessageToFriendMessages(msg,"friend");scrollMessagesToBottom();}}else{showFriendsNotification('messages');showUserTagNotification(userTag);let focusedFriendTag=getFocusedFriendTagMessages();if(focusedFriendTag!=userTag){showUserTagNotification(userTag);}else{addMessageToFriendMessages(msg,"friend");}}});});document.addEventListener("DOMContentLoaded",function(){socket.on('party_invite',(data)=>{document.getElementById('friends-party-invite-container').appendChild(getPartyInviteHtml(data.user_tag));});socket.on('party_message',(data)=>{if(!partyTabOpen){showFriendsNotification('party');}
+addMessageToPartyMessages(data.message_dict);scrollPartyToBottom();});socket.on('user_left_party',(data)=>{addLeftPartyMessage(data.user_tag);});});function setMessagesUserTagActive(userTag){userTagElem=getElemFromUserTag(userTag).classList.add('active');}
 function addActiveToMessageUserTag(elem){elem.classList.add('active');}
 function removeActiveFromMessageUserTags(){document.querySelectorAll('#friends-messages-friends-friends div').forEach((el)=>el.classList.remove('active'));}
 function clearInput(elem){elem.value='';}
@@ -16,13 +17,14 @@ function setMembersInFriendPartyDiv(members,leader_id,is_leader){let elem=docume
 function setMessagesInFriendPartyDiv(messages){let elem=document.getElementById('friends-party-user-messages');elem.innerHTML='';elem.appendChild(htmlToElement(getFriendPartyMessagesHtml(messages)));}
 function setNotInPartyInPartyDiv(){let elem=document.getElementById('friends-party-user-messages');elem.innerHTML='Not in party.';}
 function addMessageToFriendMessages(message,type="self"){document.querySelector('#friends-messages-user-messages > div').appendChild((type=="self")?htmlToElement(getSelfMessageHtml(message)):htmlToElement(getFriendMessageHtml(message)))}
-function addMessageToPartyMessages(messageDict){let elem=document.getElementById('friends-party-user-messages');elem.appendChild(htmlToElement(getFriendPartyMessageHtml(messageDict)));}
+function addLeftPartyMessage(userTag){let elem=document.getElementById('friends-party-user-messages');elem.appendChild(htmlToElement(getLeftPartyMessageHtml(messageDict)));}
+function addMessageToPartyMessages(messageDict){let elem=document.querySelector('#friends-party-user-messages > div');elem.appendChild(htmlToElement(getFriendPartyMessageHtml(messageDict)));}
 function addUserTagToMessages(userTag){let list=document.getElementById('friends-messages-friends-friends');let userTagElem=htmlToElement(`<div data-user-tag="${userTag}">${userTag}<span class="friends-user-tag-notification-div">0</span></div>`);list.insertBefore(userTagElem,list.firstChild);userTagElem.addEventListener('click',clickUserTagInMessages);return userTagElem;}
 function getElemFromUserTag(userTag){return document.querySelector(`[data-user-tag="${userTag.trim()}"]`);}
 async function focusUserTag(userTag){let userTagElem=getElemFromUserTag(userTag);if(!userTagElem){userTagElem=addUserTagToMessages(userTag)
 initializeUserTagElem(userTagElem);}
 let list=document.getElementById('friends-messages-friends-friends');let messages=await reqGetFriendMessages(userTag);setMessagesInFriendMessagesDiv(messages);moveChildToFirstChild(userTagElem,list);removeActiveFromMessageUserTags();addActiveToMessageUserTag(userTagElem);friendUserTagSelected=userTag;scrollMessagesToBottom('auto');}
-async function focusParty(){let list=document.getElementById('friends-party-friends-members');let[members,messages,leader_id,is_leader]=await reqGetFriendPartyDetails();if(messages==="not in party"){setNotInPartyInPartyDiv();return;}
+async function focusParty(){let[members,messages,leader_id,is_leader]=await reqGetFriendPartyDetails();if(messages==="not in party"){setNotInPartyInPartyDiv();return;}
 setMembersInFriendPartyDiv(members,leader_id,is_leader);setMessagesInFriendPartyDiv(messages);scrollPartyToBottom('auto');}
 function getFocusedFriendTagMessages(){return document.querySelector(`[data-user-tag].active`).dataset.userTag;}
 let friendUserTagSelected;function getFriendMessageHtml(message){return`<div class="friends-messages-friend-message">${message}</div>`}
@@ -30,6 +32,7 @@ function getSelfMessageHtml(message){return`<div class="friends-messages-self-me
 function getFriendMessagesHtml(messages){let html='<div>';for(let msg of messages){html+=(msg.who=='self')?getSelfMessageHtml(msg.message):getFriendMessageHtml(msg.message);}
 html+='</div>'
 return html;}
+function getLeftPartyMessageHtml(userTag){return`<div class="friends-party-message">${userTag}left the party.</div>`}
 function getFriendPartyMessageHtml(msg){return`<div class="friends-party-message">${msg.user_tag}:&ensp;${msg.message}</div>`}
 function getFriendPartyMessagesHtml(messages){let html='<div>';for(let msg of messages){html+=getFriendPartyMessageHtml(msg);}
 html+='</div>'
@@ -61,23 +64,22 @@ function reqSendMessageToFriend(message,userTag){let formData=new FormData();for
 async function reqGetFriendPartyDetails(){const res=await fetch('/friends/get_party_details',{method:"GET",})
 const result=await res.json();const messages=await result.messages;const members=await result.members;const leader_id=await result.leader_id;const is_leader=await result.is_leader;return[members,messages,leader_id,is_leader];}
 async function reqSendPartyInvite(userId){let formData=new FormData();formData.append('user_id',userId);const res=await fetch('/friends/send_party_invite',{method:"POST",body:formData})
-const result=await res.json();try{if(result.success){socket.emit('join_party_room',{'room':result.party_sid});}}catch(error){}}
+const result=await res.json();try{addNotification(result,3000);}catch(error){}}
 async function reqDeclinePartyInvite(userTag){let formData=new FormData();formData.append('user_tag',userTag);const res=await fetch('/friends/decline_party_invite',{method:"POST",body:formData})
 const result=await res.json();}
-async function reqAcceptPartyInvite(userTag){let formData=new FormData();formData.append('user_tag',userTag);const res=await fetch('/friends/accept_party_invite',{method:"POST",body:formData});const result=await res.json();try{socket.emit('join_party_room',{'room':result.party_sid})
-console.log("joined party socket room");}catch(error){}}
-function reqSendPartyMessage(message){let formData=new FormData();formData.append('message',message);fetch('/friends/send_party_message',{method:"POST",body:formData}).then(res=>res.json()).then(json=>console.log(json)).catch(error=>console.warn(error));}
+async function reqAcceptPartyInvite(userTag){let formData=new FormData();formData.append('user_tag',userTag);const res=await fetch('/friends/accept_party_invite',{method:"POST",body:formData});const result=await res.json();}
+function reqSendPartyMessage(message){let formData=new FormData();formData.append('message',message);fetch('/friends/send_party_message',{method:"POST",body:formData}).then(res=>res.json()).catch(error=>console.warn(error));}
 async function reqLeaveParty(){const res=await fetch('/friends/leave_party',{method:"POST",});const result=await res.json();addNotification(result,3000);try{}catch(error){}}
 function scrollMessagesToBottom(behavior='smooth'){document.querySelector('#friends-messages-user-messages').scrollTo({top:999999,left:100,behavior:behavior});}
 function scrollPartyToBottom(behavior='smooth'){document.querySelector('#friends-party-user-messages').scrollTo({top:999999,left:100,behavior:behavior});}
-let friendsListOpen=false;let messagesListOpen=false;let partyListOpen=false;function toggleFriendsList(){(friendsListOpen)?closeFriendsList():openFriendsList();}
+let friendsListOpen=false;let messagesListOpen=false;let partyTabOpen=false;function toggleFriendsList(){(friendsListOpen)?closeFriendsList():openFriendsList();}
 function toggleMessagesList(){(messagesListOpen)?closeMessagesList():openMessagesList();}
-function togglePartyList(){(partyListOpen)?closePartyList():openPartyList();}
+function togglePartyList(){(partyTabOpen)?closePartyList():openPartyList();}
 function openFriendsList(){document.getElementById('friends-list').style.display='flex';friendsListOpen=true;}
 function openMessagesList(){document.getElementById('friends-messages-list').style.display='flex';messagesListOpen=true;scrollMessagesToBottom();}
 function closeFriendsList(){document.getElementById('friends-list').style.display='none';friendsListOpen=false;}
 function closeMessagesList(){document.getElementById('friends-messages-list').style.display='none';messagesListOpen=false;}
-function openPartyList(){document.getElementById('friends-party-list').style.display='flex';focusParty();partyListOpen=true;scrollPartyToBottom();}
-function closePartyList(){document.getElementById('friends-party-list').style.display='none';partyListOpen=false;}
+function openPartyList(){document.getElementById('friends-party-list').style.display='flex';focusParty();partyTabOpen=true;scrollPartyToBottom();}
+function closePartyList(){document.getElementById('friends-party-list').style.display='none';partyTabOpen=false;}
 function showFriendsListVariation(variation){hideAllFriendLists();document.getElementById(`friends-list-${variation}`).style.display='flex';}
 function hideAllFriendLists(){for(let variation of['list','requests','blocked','recent']){document.getElementById(`friends-list-${variation}`).style.display='none';}}

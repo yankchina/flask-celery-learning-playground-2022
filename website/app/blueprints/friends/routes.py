@@ -1,5 +1,6 @@
 from flask import request, jsonify, current_app, render_template
 from flask_login import current_user
+from flask_socketio import join_room, leave_room, send
 from app.blueprints.friends import bp
 from app.helpers.models import get_user_from_id, get_user_from_tag
 from app.blueprints.friends.cache_helpers import get_sid_from_user_id
@@ -122,9 +123,10 @@ def send_party_invite():
 def accept_party_invite():
     inviting_user = get_user_from_tag(request.form.get('user_tag'))
     accept_status = current_user.accept_party_invite(str(inviting_user.id))
-    party = current_user.get_party()
-    emit_notification_json(accept_status, [get_sid_from_user_id(str(current_user.id)), get_sid_from_user_id(str(inviting_user.id))])
-    emit_party_message_to_sid(f'{current_user.user_tag} has joined the party.', party.sid)
+    if accept_status['success']:
+        join_room(accept_status.get('party_sid', ''), sid=get_sid_from_user_id(str(current_user.id)), namespace="/")
+        del accept_status['party_sid']
+        emit_party_message_to_sid(f'{current_user.user_tag} has joined the party.', accept_status.get('party_sid', ''))
     return jsonify(accept_status)
 
 @bp.route('/decline_party_invite', methods=["POST"])
@@ -135,6 +137,12 @@ def decline_party_invite():
 @bp.route('/leave_party', methods=["POST"])
 def leave_party():
     try:
-        return jsonify(current_user.leave_party())
+        leave_status = current_user.leave_party()
+        leave_room(leave_status.get('party_sid', ''), sid=get_sid_from_user_id(str(current_user.id)), namespace="/")
+        del leave_status['party_sid']
+        emit_notification_json(f'{current_user.user_tag} left the party.', leave_status.get('party_sid', ''))
+        emit_notification(f'{current_user.user_tag} left the party.', leave_status.get('party_sid', ''))
+        return jsonify(leave_status)
     except:
+        current_app.logger.exception('Failed to leave party')
         return jsonify({'success': False, 'message': f'Failed to leave party for unknown reason'})

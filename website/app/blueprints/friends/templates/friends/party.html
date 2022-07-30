@@ -53,14 +53,9 @@
 {% if current_user.party_id %}
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        console.log( socket );
         if ('{{current_user.party_id}}') {
             socket.emit('join_party_room', {'room': '{{ current_user.party_id }}'})
         };
-
-        socket.on('connection', data => {
-            console.log( data );
-        });
     });
 </script>
 {% endif %}

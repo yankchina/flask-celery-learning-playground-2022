@@ -12,14 +12,13 @@ def emit_notification(data):
     # socket_ids
 
 @socketio.on('join_party_room')
-def on_join(data):
-    print(data, flush=True)
+def join_party_room(data):
     room = data['room']
     join_room(room)
     send('Joined room.', to=room)
 
 @socketio.on('leave_party_room')
-def on_leave(data):
+def leave_party_room(data):
     room = data['room']
     leave_room(room)
     send('Left room.', to=room)

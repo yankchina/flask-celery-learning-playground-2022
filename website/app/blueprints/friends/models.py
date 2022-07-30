@@ -50,19 +50,22 @@ class Party(me.Document):
         pass
 
     def add_member(self, sending_user, user_id):
-        if str(sending_user.id) != self.leader and self.settings.get('leader_invite_only'):
-            return {'success': False, 'message': 'Sending user not authorized to invite'}
-        user = get_user_from_id(user_id)
-        if not user:
-            return {'success': False, 'message': 'No user found with that ID'}
-        user_tag = user.user_tag
-        self.members.append({
-            'user_id': user_id,
-            'user_tag': user_tag,
-            'mmr': user.mmr,
-        })
-        self.save()
-        return {'success': True, 'message': f'{user.user_tag} added to party.'}
+        try:
+            if str(sending_user.id) != self.leader and self.settings.get('leader_invite_only'):
+                return {'success': False, 'message': 'Party is currently set to leader invite only.'}
+            user = get_user_from_id(user_id)
+            if not user:
+                return {'success': False, 'message': 'No user found with that ID'}
+            user_tag = user.user_tag
+            self.members.append({
+                'user_id': user_id,
+                'user_tag': user_tag,
+                'mmr': user.mmr,
+            })
+            self.save()
+            return {'success': True, 'message': f'{user.user_tag} joined the party.', 'party_sid': self.sid}
+        except:
+            return {'success': False, 'message': f'Failed to add user to party for unknown reason.'}
 
     def remove_member(self, user_id):
         self.members = [mem for mem in self.members if mem['user_id'] != user_id]
@@ -71,7 +74,7 @@ class Party(me.Document):
         if self.leader == user_id:
             self.leader = self.members[0]['user_id']
         self.save()
-        return {'success': True, 'message': 'User removed from party successfully'}
+        return {'success': True, 'message': 'Left party.', 'party_sid': self.sid}
 
     def add_message(self, user_id, message):
         try:

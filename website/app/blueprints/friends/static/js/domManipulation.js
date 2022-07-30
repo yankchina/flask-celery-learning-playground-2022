@@ -33,8 +33,12 @@ function addMessageToFriendMessages(message, type="self") {
         (type == "self") ? htmlToElement(getSelfMessageHtml(message)) : htmlToElement(getFriendMessageHtml(message))
     )
 }
-function addMessageToPartyMessages(messageDict) {
+function addLeftPartyMessage(userTag) {
     let elem = document.getElementById('friends-party-user-messages');
+    elem.appendChild(htmlToElement(getLeftPartyMessageHtml(messageDict)));
+}
+function addMessageToPartyMessages(messageDict) {
+    let elem = document.querySelector('#friends-party-user-messages > div');
     elem.appendChild(htmlToElement(getFriendPartyMessageHtml(messageDict)));
 }
 

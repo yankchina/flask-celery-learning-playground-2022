@@ -42,11 +42,11 @@ class PartyMixin:
             # check if user is in party
             for member in party.members:
                 if user_id == member['user_id']:
-                    return {'success': False, 'message': 'User is already in party'}
+                    return {'success': False, 'message': 'Player is already in party'}
 
             if str(self.id) != party.leader:
                 if party.settings.get('leader_invite_only'):
-                    return {'success': False, 'message': 'Sending user not authorized to invite'}
+                    return {'success': False, 'message': 'Party is currently set to leader invite only.'}
 
             if party.size >= party.max_size:
                 return {'success': False, 'message': 'Party is full'}
@@ -88,12 +88,15 @@ class PartyMixin:
         party = self.get_party()
         if party:
             message_dict = party.add_message(str(self.id), message)
+            prnt(message_dict)
             if message_dict:
                 print(party, flush=True)
-                for member_id in party.members:
-                    sid = get_sid_from_user_id(member_id)
-                    print(sid, flush=True)
-                    emit_party_message_to_sid(message_dict, sid)
+                emit_party_message_to_sid(message_dict, party.sid)
+
+                # for member_id in party.members:
+                #     sid = get_sid_from_user_id(member_id)
+                #     print(sid, flush=True)
+                #     emit_party_message_to_sid(message_dict, sid)
 
                     # another option here is to have users join a specific room and emit to that room
                     # that would be more efficient than sending to everyone but would require a bit of extra work
